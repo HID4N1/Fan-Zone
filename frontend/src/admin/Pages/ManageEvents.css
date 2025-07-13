@@ -1,3 +1,141 @@
-.manage-events{
-    color: black;
+/* Container for the Manage Events page */
+.manage-events-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Heading style */
+.manage-events-container h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* Create Event button */
+.manage-events-container > button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.manage-events-container > button:hover {
+  background-color: #0056b3;
+}
+
+/* Table styles */
+.manage-events-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.manage-events-table th,
+.manage-events-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.manage-events-table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+}
+
+/* Alternating row colors */
+.manage-events-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Row hover effect */
+.manage-events-table tbody tr:hover {
+  background-color: #e9f5ff;
+}
+
+/* Action buttons */
+.manage-events-table button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.manage-events-table button:hover {
+  background-color: #1e7e34;
+}
+
+/* Delete button distinct color */
+.manage-events-table button:nth-child(2) {
+  background-color: #dc3545;
+}
+
+.manage-events-table button:nth-child(2):hover {
+  background-color: #a71d2a;
+}
+
+/* Download QR button distinct color */
+.manage-events-table button:nth-child(3) {
+  background-color: #17a2b8;
+}
+
+.manage-events-table button:nth-child(3):hover {
+  background-color: #117a8b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .manage-events-table, 
+  .manage-events-table thead, 
+  .manage-events-table tbody, 
+  .manage-events-table th, 
+  .manage-events-table td, 
+  .manage-events-table tr {
+    display: block;
+  }
+
+  .manage-events-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .manage-events-table tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  .manage-events-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .manage-events-table td::before {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+    text-align: left;
+    content: attr(data-label);
+  }
 }

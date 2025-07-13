@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
-import api from '../services/api'; 
+import api from '../../services/api'; 
 import './AdminDashboard.css'; 
 
 const AdminDashboard = () => {

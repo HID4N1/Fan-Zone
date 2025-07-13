@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Event, FanZone, Station, Route
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -14,7 +15,9 @@ class FanZoneSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     fanzone = FanZoneSerializer(read_only=True)
-
+    fanzone_id = serializers.PrimaryKeyRelatedField(
+    queryset=FanZone.objects.all(), source='fanzone', write_only=True
+    )
     class Meta:
         model = Event
         fields = '__all__'

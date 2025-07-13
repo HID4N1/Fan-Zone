@@ -4,9 +4,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import AdminDashboard from './admin/Pages/AdminDashboard';
 import ManageEvents from './admin/Pages/ManageEvents';
+import CreateEvent from './admin/Pages/CreateEvent';
+import ManageFanzones from './admin/Pages/ManageFanzones';
 import AdminLogin from './admin/Pages/AdminLogin';
 import AdminProtectedRoute from './admin/AdminProtectedRoute';
-
+import EditEvent from './admin/Pages/EditEvent';
 
 import Home from './pages/Home';
 import Fanzones from './pages/Fanzones';
@@ -60,9 +62,30 @@ function App() {
                 </AdminProtectedRoute>
               }
             />
+
+
+            {/* events routing */}
             <Route path="events" element={
               <AdminProtectedRoute>
                 <ManageEvents />
+              </AdminProtectedRoute>
+            } />
+            <Route path="events/create" element={
+              <AdminProtectedRoute>
+                <CreateEvent />
+              </AdminProtectedRoute>
+            } />
+            <Route path="events/:id/edit" element={
+              <AdminProtectedRoute>
+                <EditEvent />
+              </AdminProtectedRoute>
+            } />
+
+
+            {/* fanzones routing */}
+            <Route path="fanzones" element={
+              <AdminProtectedRoute>
+                <ManageFanzones />
               </AdminProtectedRoute>
             } />
             

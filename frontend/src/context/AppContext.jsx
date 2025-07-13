@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import api from '../admin/services/api'; 
+import api from '../services/api'; 
 
 const AppContext = createContext();
 
