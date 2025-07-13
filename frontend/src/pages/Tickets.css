@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.ticket-page {
+  padding: 2rem;
+  background-color: #fff;
+  color: #333;
+}
+
+/* --- Ticket Card --- */
+.single-ticket .ticket-card,
+.card {
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: #fafafa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+}
+
+.ticket-card h3,
+.card h4 {
+  margin-top: 0;
+  color: #2a2a2a;
+}
+
+.price,
+.price-highlight {
+  font-weight: bold;
+  color: #e63946;
+  margin-top: 1rem;
+}
+
+/* --- Buttons --- */
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #f36f2b;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #d85e20;
+}
+
+/* --- Section: Voyages réguliers --- */
+.regular-travel h2 {
+  color: #e63946;
+  font-size: 1.8rem;
+}
+
+.subtitle {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* --- Section: Footer CTA Buttons --- */
+.subscription-footer {
+  margin-top: 3rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cta,
+.cta-outline {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cta-outline {
+  background: transparent;
+  border: 2px solid #f36f2b;
+  color: #f36f2b;
+}
+
+.cta-outline:hover {
+  background-color: #f36f2b;
+  color: white;
+}
+

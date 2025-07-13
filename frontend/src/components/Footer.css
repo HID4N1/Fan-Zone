@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.footer {
+    background-color: #fdc396c7;
+    padding: 30px 20px;
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+  }
+  
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .footer-section {
+    flex: 1 1 200px;
+    min-width: 200px;
+  }
+  
+.logo img{
+    width: 240px;
+    height: 80px;
+}
+  
+  .logo-operated {
+    font-size: 12px;
+    color: #666;
+    margin-top: -8px;
+  }
+  
+  .description {
+    text-align: left ;
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .social-icons-grid {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .social-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+  
+  .social-row img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .social-link {
+    text-decoration: underline;
+    font-size: 14px;
+    color: #000;
+  }
+  
+  
+  .footer-section h3 {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .footer-section ul {
+    text-align: left;
+    margin-left: 35%;
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 8px;
+  }
+  
+  .contact input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    border: none;
+    background-color: #eee8f9;
+  }
+  
+  .contact button {
+    background-color: #ff6a00;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .contact p {
+    font-size: 13px;
+  }
+  
+  .contact a {
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid #000;
+    margin-top: 30px;
+    padding-top: 15px;
+    font-size: 13px;
+    font-weight: bolder;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+  }
+/* Responsive styles for phone mode */
+@media (max-width: 768px) {
+  
+
+    .logo-desc {
+      text-align: center; /* Center-align logo and description */
+    }
+  
+    .social-icons-grid {
+      justify-content: center; /* Center-align social icons */
+    }
+  
+    .social-row {
+      justify-content: center; /* Center-align social rows */
+    }
+
+  }

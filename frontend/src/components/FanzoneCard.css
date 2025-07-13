@@ -1,0 +1,135 @@
+/* FanzoneCard.css */
+.card {
+  width: 320px;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #f8f8f8, #ffffff);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffd700, #e41f25, #009a49);
+}
+
+.card-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 3px solid #f0f0f0;
+}
+
+.card-content {
+  padding: 18px;
+  position: relative;
+  text-align: left;
+}
+
+.card-title {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  color: #333;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #e41f25, #ff8c00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-description, .card-location {
+  margin: 0 0 0px 0;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  min-height: 60px;
+}
+.card-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.location-icon {
+  flex-shrink: 0;
+  color: #e41f25; /* Match your theme color */
+}
+
+.card-button {
+  background: linear-gradient(to right, #e41f25, #ff8c00);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(228, 31, 37, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+
+.card-button:hover {
+  background: linear-gradient(to right, #c9191f, #e67e00);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(228, 31, 37, 0.3);
+}
+
+.card-button::after {
+  content: "⚽";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.card-button:hover::after {
+  opacity: 1;
+  right: 20px;
+}
+
+/* Football pitch inspired details */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #009a49, #ffd700, #e41f25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 350px;
+  }
+}
