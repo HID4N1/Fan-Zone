@@ -67,22 +67,30 @@ const ManageEvents = () => {
           </tr>
         </thead>
         <tbody>
-          {events.map((ev) => (
-            <tr key={ev.id}>
-              <td data-label="ID">{ev.id}</td>
-              <td data-label="Name">{ev.name}</td>
-              <td data-label="Date">{ev.date}</td>
-              <td data-label="Start Time">{ev.start_time}</td>
-              <td data-label="Status">{ev.status}</td>
-              <td data-label="FanZone">{ev.fanzone?.name || ev.fanzone}</td>
-              <td data-label="QR Code">{ev.qr_code_id}</td>
-              <td data-label="Actions">
-                <button onClick={() => navigate(`/admin/events/${ev.id}/edit`)}>Edit</button>
-                <button onClick={() => handleDelete(ev.id)}>Delete</button>
-                <button onClick={() => handleDownloadQR(ev.qr_code_id)}>Download QR</button>
+          {events.length === 0 ? (
+            <tr>
+              <td colSpan="8" style={{ textAlign: 'center' }}>
+                No events found.
               </td>
             </tr>
-          ))}
+          ) : (
+            events.map((ev) => (
+              <tr key={ev.id}>
+                <td data-label="ID">{ev.id}</td>
+                <td data-label="Name">{ev.name}</td>
+                <td data-label="Date">{ev.date}</td>
+                <td data-label="Start Time">{ev.start_time}</td>
+                <td data-label="Status">{ev.status}</td>
+                <td data-label="FanZone">{ev.fanzone?.name || ev.fanzone}</td>
+                <td data-label="QR Code">{ev.qr_code_id}</td>
+                <td data-label="Actions">
+                  <button onClick={() => navigate(`/admin/events/${ev.id}/edit`)}>Edit</button>
+                  <button onClick={() => handleDelete(ev.id)}>Delete</button>
+                  <button onClick={() => handleDownloadQR(ev.qr_code_id)}>Download QR</button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

@@ -16,6 +16,7 @@ class Event(models.Model):
     description = models.TextField(blank=True)
     date = models.DateField()
     start_time = models.TimeField()
+    end_date = models.DateField(blank=True, null=True)
     fanzone = models.ForeignKey('FanZone', on_delete=models.CASCADE)
     qr_code_id = models.CharField(max_length=100, unique=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Upcoming')
@@ -23,16 +24,18 @@ class Event(models.Model):
 
     def update_status(self):
         now = timezone.now()
-        # Combine date and start_time into a datetime for comparison
-        event_start = timezone.make_aware(datetime.combine(self.date, self.start_time))
-        event_end = event_start + timedelta(hours=24)
-
-        if now < event_start:
-            self.status = 'Upcoming'
-        elif event_start <= now <= event_end:
-            self.status = 'In Progress'
-        else:
+        if self.end_date and now.date() > self.end_date:
             self.status = 'Completed'
+        else:
+            event_start = timezone.make_aware(datetime.combine(self.date, self.start_time))
+            event_end = event_start + timedelta(hours=24)
+
+            if now < event_start:
+                self.status = 'Upcoming'
+            elif event_start <= now <= event_end:
+                self.status = 'In Progress'
+            else:
+                self.status = 'Completed'
         self.save(update_fields=['status'])
 
     def __str__(self):

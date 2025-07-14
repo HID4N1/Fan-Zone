@@ -11,6 +11,7 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
     name: '',
     description: '',
     date: '',
+    end_date: '',
     start_time: '',
     fanzone: '', 
     qr_code_id: '', 
@@ -48,6 +49,7 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
         name: initialData.name || '',
         description: initialData.description || '',
         date: initialData.date || '',
+        end_date: initialData.end_date || '',
         start_time: startTime,
         fanzone: initialData.fanzone?.id || initialData.fanzone || '',
         qr_code_id: initialData.qr_code_id || '',
@@ -69,7 +71,7 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
     let combinedStartTime = formData.start_time;
 
     // Generate QR Code ID ghir f new creation
-    const { fanzone, name, description, date, start_time, qr_code_id } = formData;
+    const { fanzone, name, description, date, end_date, start_time, qr_code_id } = formData;
 
     // Ensure qr_code_id is generated if empty
     const qrCodeIdToUse = isEdit ? qr_code_id : (qr_code_id || generateQrCodeId());
@@ -82,6 +84,7 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
     finalData.append('name', name);
     finalData.append('description', description);
     finalData.append('date', date);
+    finalData.append('end_date', end_date);
     if (imageFile) {
       finalData.append('image', imageFile);
     }
@@ -135,6 +138,15 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
         value={formData.date}
         onChange={handleChange}
         required
+      />
+
+      <label htmlFor="end_date">End Date</label>
+      <input
+        id="end_date"
+        name="end_date"
+        type="date"
+        value={formData.end_date}
+        onChange={handleChange}
       />
 
       <label htmlFor="start_time">Start Time</label>

@@ -26,7 +26,6 @@ const FanzoneCard = ({ key, imageUrl, title, description, location, buttonText =
           </svg>
           {location}
         </p>         
- <button className="card-button">{buttonText}</button>
         </div>
       </div>
     );

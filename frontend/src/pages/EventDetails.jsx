@@ -44,7 +44,7 @@ const EventDetails = () => {
           <h1 className="hero-title">EXPERIENCE THE MAGIC OF</h1>
           <h2 className="hero-subtitle">{event.name.toUpperCase()}</h2>
           <p className="hero-description">{event.description}</p>
-          <button className="cta-button">GET TICKETS</button>
+          <button className="cta-button">Find Your Way</button>
         </div>
       </div>
 
@@ -68,6 +68,13 @@ const EventDetails = () => {
               <div className="highlight-item">
                 <h3>MEMORABLE MOMENTS</h3>
                 <p>Create lasting memories with friends and family</p>
+              </div>
+              <div className="highlight-item">
+                <h3>EVENT DATES</h3>
+                <p>
+                  Start: {event.date} {event.start_time}<br />
+                  End: {event.end_date ? event.end_date : 'N/A'}
+                </p>
               </div>
             </div>
           </div>
