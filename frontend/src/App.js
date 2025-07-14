@@ -2,13 +2,19 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
-import AdminDashboard from './admin/Pages/AdminDashboard';
-import ManageEvents from './admin/Pages/ManageEvents';
-import CreateEvent from './admin/Pages/CreateEvent';
-import ManageFanzones from './admin/Pages/ManageFanzones';
 import AdminLogin from './admin/Pages/AdminLogin';
 import AdminProtectedRoute from './admin/AdminProtectedRoute';
+import AdminDashboard from './admin/Pages/AdminDashboard';
+
+import ManageEvents from './admin/Pages/ManageEvents';
+import CreateEvent from './admin/Pages/CreateEvent';
 import EditEvent from './admin/Pages/EditEvent';
+
+import ManageFanzones from './admin/Pages/ManageFanzones';
+import CreateFanZone from './admin/Pages/CreateFanZone';
+import EditFanZone from './admin/Pages/EditFanZone';
+
+
 
 import Home from './pages/Home';
 import Fanzones from './pages/Fanzones';
@@ -88,7 +94,16 @@ function App() {
                 <ManageFanzones />
               </AdminProtectedRoute>
             } />
-            
+            <Route path="fanzones/create" element={
+              <AdminProtectedRoute>
+                <CreateFanZone />
+              </AdminProtectedRoute>
+            } />
+            <Route path="fanzones/:id/edit" element={
+              <AdminProtectedRoute>
+                <EditFanZone />
+              </AdminProtectedRoute>
+            } />
           </Route>
 
 

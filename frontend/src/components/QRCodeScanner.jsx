@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import { useNavigate } from "react-router-dom";
-import events from "../data/events";
 import { useAppContext } from "../context/AppContext";
 
-const QRCodeScanner = ({ onError, onClose }) => {
+const QRCodeScanner = ({ onScan, onError, onClose }) => {
   const scannerRef = useRef(null);
   const html5QrCodeRef = useRef(null);
   const scannerId = useRef("qr-reader-container-" + Math.random().toString(36).substr(2, 9));
@@ -39,14 +38,10 @@ const QRCodeScanner = ({ onError, onClose }) => {
             // Not a valid URL, keep eventId as is
           }
   
-          const event = events.find((e) => e.id === eventId);
-  
-          if (!event) {
-            alert("Event not found.");
-            return;
+          // Call onScan prop with decodedText to let parent handle event lookup and navigation
+          if (onScan) {
+            onScan(eventId);
           }
-  
-          dispatch({ type: "SET_EVENT", payload: event });
   
           try {
             if (isStarted.current) {
@@ -57,8 +52,6 @@ const QRCodeScanner = ({ onError, onClose }) => {
           } catch (err) {
             console.warn("Safe stop failed:", err.message);
           }
-  
-          navigate(`/event/${eventId}`);
         },
         (error) => {
           // Optionally log or ignore scan errors
@@ -90,7 +83,7 @@ const QRCodeScanner = ({ onError, onClose }) => {
         scannerRef.current.innerHTML = "";
       }
     };
-  }, [onError]);
+  }, [onScan, onError]);
   
 
   return (
@@ -119,6 +112,5 @@ const QRCodeScanner = ({ onError, onClose }) => {
     </div>
   );
 };
-
 
 export default QRCodeScanner;

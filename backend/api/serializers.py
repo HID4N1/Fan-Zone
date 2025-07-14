@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
 class FanZoneSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(read_only=True, use_url=True)
     class Meta:
         model = FanZone
         fields = '__all__'
@@ -16,8 +17,9 @@ class FanZoneSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     fanzone = FanZoneSerializer(read_only=True)
     fanzone_id = serializers.PrimaryKeyRelatedField(
-    queryset=FanZone.objects.all(), source='fanzone', write_only=True
+        queryset=FanZone.objects.all(), source='fanzone', write_only=True
     )
+    image = serializers.ImageField(read_only=True, use_url=True)
     class Meta:
         model = Event
         fields = '__all__'

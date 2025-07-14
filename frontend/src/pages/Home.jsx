@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
+import axios from 'axios';
 
 import './Home.css';
-import events from '../data/events';
 import QRCodeScanner from '../components/QRCodeScanner';
 
 const backgroundImage = process.env.PUBLIC_URL + '/assets/images/Fanzone_1.jpg';
@@ -11,40 +12,126 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState('scan');
   const [showScanner, setShowScanner] = useState(false);
   const [scanResult, setScanResult] = useState('');
+  const [events, setEvents] = useState([]); 
+  const [fanZones, setFanZones] = useState([]);
+  const [manualSearch, setManualSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [noResultsMessage, setNoResultsMessage] = useState('');
 
-// data hiya l event/eventID  link dyal l event
-  const handleScan = data => {
+  const navigate = useNavigate();
+
+  // data hiya l eventID  link dyal l event
+  // ✅ Scan logic now uses fetched events
+  const handleScan = async (data) => {
+    console.log('Scanned QR code data:', data);
     setScanResult(data);
     setShowScanner(false);
-    // redirected to the url scanned
-    const eventId = data.split('/').pop(); // Assuming the URL ends with the event ID
-    if (eventId) {
-      const event = events.find(e => e.id === eventId);
-      if (event) {
-        // Redirect to the event details page
-        navigate(`/event/${eventId}`);
-      } else {
+
+    // QR code data is the QR code ID linked to an event
+    const qrCodeId = data;
+
+    if (qrCodeId) {
+      try {
+        console.log('Fetching event for QR code ID:', qrCodeId);
+        // Fetch event by QR code ID
+        const response = await axios.get(`http://127.0.0.1:8000/api/public-events/qr/${qrCodeId}/`);
+        console.log('API response for QR code ID:', response.data);
+        if (response.data && response.data.id) {
+          console.log(`Navigating to event details page for event ID: ${response.data.id}`);
+          navigate(`/event/${response.data.id}`);
+        } else {
+          alert('Event not found for the scanned QR code.');
+        }
+      } catch (error) {
+        console.error('Error fetching event by QR code ID:', error);
         alert('Event not found for the scanned QR code.');
       }
-    }
-    else {
+    } else {
       alert('Invalid QR code scanned.');
     }
-    
-   
   };
+
+  const goToFanZone = () => {
+    navigate('/fanzone');
+  };
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/api/public-events/')
+      .then(res => setEvents(res.data))
+      .catch(err => {
+        console.error('Failed to fetch events:', err);
+        if (err.response && err.response.status === 401) {
+          alert('Unauthorized access. Please log in to view events.');
+        } else {
+          alert('Failed to load events.');
+        }
+      });
+
+    axios.get('http://127.0.0.1:8000/api/public-fanzones/')
+      .then(res => setFanZones(res.data))
+      .catch(err => {
+        console.error('Failed to fetch fan zones:', err);
+      });
+  }, []);
 
   const handleError = err => {
     let message = 'Erreur inconnue';
     if (err?.message) message = err.message;
     else if (typeof err === 'string') message = err;
     else try { message = JSON.stringify(err); } catch {}
-    alert('Camera error: ' + message + '\n\nVérifie que la caméra est autorisée, non utilisée ailleurs, et bien branchée.');
+    alert('Camera error: ' + message + '\n\nVérifie que la caméra est autorisée, non utilisée ailleurs, et que tu as une connexion internet stable.');
     setShowScanner(false);
   };
-  const navigate = useNavigate();
-  const goToFanZone = () => {
-    navigate('/fanzone');
+
+  const handleManualSearchChange = e => {
+    setManualSearch(e.target.value);
+  };
+
+  const performSearch = useCallback(() => {
+    if (!manualSearch.trim()) {
+      setNoResultsMessage('');
+      setSearchResults([]);
+      return;
+    }
+    const foundEvents = events.filter(e =>
+      e.name.toLowerCase().includes(manualSearch.toLowerCase()) ||
+      String(e.id) === manualSearch
+    );
+    const foundFanZones = fanZones.filter(fz =>
+      fz.name.toLowerCase().includes(manualSearch.toLowerCase()) ||
+      String(fz.id) === manualSearch
+    );
+
+    const combinedResults = [
+      ...foundEvents.map(e => ({ type: 'event', data: e })),
+      ...foundFanZones.map(fz => ({ type: 'fanzone', data: fz }))
+    ];
+
+    if (combinedResults.length > 0) {
+      setSearchResults(combinedResults);
+      setNoResultsMessage('');
+    } else {
+      setSearchResults([]);
+      setNoResultsMessage('No matching event or FanZone found.');
+    }
+  }, [manualSearch, events, fanZones]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      performSearch();
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [manualSearch, performSearch]);
+
+  const handleResultClick = (type, id) => {
+    if (type === 'event') {
+      navigate(`/event/${id}`);
+    } else if (type === 'fanzone') {
+      navigate(`/fanzone/${id}`);
+    }
   };
 
   return (
@@ -68,8 +155,7 @@ const Home = () => {
         <div className="tab-bar">
           <div
             className={`tab ${activeTab === 'scan' ? 'active' : ''}`}
-            onClick={() => { setActiveTab('scan');
-            }}>
+            onClick={() => { setActiveTab('scan'); }}>
 
             <svg className="icon" viewBox="0 -0.09 122.88 122.88" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{width: '22px', height: '22px'}}>
               <g>
@@ -80,7 +166,7 @@ const Home = () => {
           </div>
           <div
             className={`tab ${activeTab === 'manual' ? 'active' : ''}`}
-            onClick={() => { setActiveTab('manual');  }}>
+            onClick={() => { setActiveTab('manual'); }}>
 
             <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg" style={{width: '22px', height: '22px'}}>
               <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"/>
@@ -113,7 +199,35 @@ const Home = () => {
         {activeTab === 'manual' && (
           <>
             <div className="manual-search">
-              <input type="text" placeholder="Search for events or FanZones..." />
+              <input 
+                type="text" 
+                placeholder="Search for events or FanZones..." 
+                value={manualSearch}
+                onChange={handleManualSearchChange}
+              />
+            {noResultsMessage && <div className="no-results-message">{noResultsMessage}</div>}
+            {searchResults.length > 0 && (
+              <div className="search-results">
+                {searchResults.map((result, idx) => (
+                  <div
+                    key={idx}
+                    className="search-result-item"
+                    onClick={() => handleResultClick(result.type, result.data.id)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {result.type === 'event' ? (
+                      <>
+                        <strong>Event:</strong> {result.data.name}
+                      </>
+                    ) : (
+                      <>
+                        <strong>FanZone:</strong> {result.data.name}
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
               <button>
                 <svg className="icon" viewBox="0 0 192.906 192.906" xmlns="http://www.w3.org/2000/svg" style={{width: '22px', height: '22px', fill: 'currentColor'}}>
                   <g>
@@ -133,23 +247,26 @@ const Home = () => {
             </div>
           </>
         )}
+        
       </div>
 
-
-    <div className="event-list">
-          <h2>Upcoming Events</h2>
-          {events.map((event, idx) => (
+      <div className="event-list">
+        <h2>Upcoming Events</h2>
+        {events.length === 0 ? (
+          <p>No events available.</p>
+        ) : (
+          events.map((event, idx) => (
             <div key={idx} className="event-item">
               <div className="event-details">
                 <strong>{event.name}</strong>
-                <p>📍 {event.location}</p>
+                <p>📍 Fan Zone {event.fanzone?.name || 'Unknown Location'}</p>
                 <p>📅 {event.date}</p>
               </div>
-              <button onClick={() => navigate(`/event/${event.id}`)}>
-                📍 Route</button>
+              <button onClick={() => navigate(`/event/${event.id}`)}>Learn More</button>
             </div>
-          ))}
-    </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

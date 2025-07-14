@@ -40,6 +40,7 @@ class Event(models.Model):
 
 class FanZone(models.Model):
     name = models.CharField(max_length=100)
+    adresse = models.CharField(max_length=255, blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
     description = models.TextField(blank=True)

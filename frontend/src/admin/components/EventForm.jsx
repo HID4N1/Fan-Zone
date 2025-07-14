@@ -106,7 +106,9 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '400px' }}>
+      <label htmlFor="name">Name</label>
       <input
+        id="name"
         name="name"
         placeholder="Name"
         value={formData.name}
@@ -114,7 +116,9 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
         required
       />
 
+      <label htmlFor="description">Description</label>
       <textarea
+        id="description"
         name="description"
         placeholder="Description (max 3 lines)"
         rows={3}
@@ -123,7 +127,9 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
         onChange={handleChange}
       />
 
+      <label htmlFor="date">Date</label>
       <input
+        id="date"
         name="date"
         type="date"
         value={formData.date}
@@ -131,7 +137,9 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
         required
       />
 
+      <label htmlFor="start_time">Start Time</label>
       <input
+        id="start_time"
         name="start_time"
         type="time"
         value={formData.start_time}
@@ -139,7 +147,9 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
         required
       />
 
+      <label htmlFor="fanzone">FanZone</label>
       <select
+        id="fanzone"
         name="fanzone"
         value={formData.fanzone}
         onChange={handleChange}
@@ -155,7 +165,9 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel, submitLabel = 'Submit
         ))}
       </select>
 
+      <label htmlFor="image">Image</label>
       <input
+        id="image"
         type="file"
         name="image"
         accept="image/*"

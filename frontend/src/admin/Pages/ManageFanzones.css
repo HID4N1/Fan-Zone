@@ -1,3 +1,108 @@
-.manage-Fanzones {
-    color: black;
+.manage-fanzones-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  min-height: 100vh;
+}
+
+.manage-fanzones-container h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.fanzones-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.fanzones-table th,
+.fanzones-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.fanzones-table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+}
+
+.fanzones-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.fanzones-table tbody tr:hover {
+  background-color: #e9f5ff;
+}
+
+.fanzones-table button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.fanzones-table button:hover {
+  background-color: #1e7e34;
+}
+
+.fanzones-table button:nth-child(2) {
+  background-color: #dc3545;
+}
+
+.fanzones-table button:nth-child(2):hover {
+  background-color: #a71d2a;
+}
+
+@media (max-width: 768px) {
+  .fanzones-table, 
+  .fanzones-table thead, 
+  .fanzones-table tbody, 
+  .fanzones-table th, 
+  .fanzones-table td, 
+  .fanzones-table tr {
+    display: block;
+  }
+
+  .fanzones-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .fanzones-table tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  .fanzones-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .fanzones-table td::before {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+    text-align: left;
+    content: attr(data-label);
+  }
 }

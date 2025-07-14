@@ -1,24 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import events from "../data/events";
+import axios from "axios";
 import "./EventDetails.css";
-import { useAppContext } from "../context/AppContext";
 
 const EventDetails = () => {
-  const { state } = useAppContext();
   const { eventId } = useParams();
-  const event = events.find((e) => e.id === eventId);
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!event) return <div className="not-found">Event not found.</div>;
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://127.0.0.1:8000/api/public-events/${eventId}/`);
+        setEvent(response.data);
+        setError(null);
+      } catch (err) {
+        setError("Event not found or failed to load.");
+        setEvent(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [eventId]);
+
+  if (loading) return <div className="loading">Loading event details...</div>;
+  if (error) return <div className="not-found">{error}</div>;
+  if (!event) return null;
 
   return (
     <div className="event-details-container">
       {/* Hero Section */}
-      <div className="event-hero"
-         style={{
-          backgroundImage: `linear-gradient(rgba(195, 81, 0, 0.9), rgba(0, 0, 0, 0.7)), url('/assets/images/CAN2025.png')`
-         }}
-        >
+      <div
+        className="event-hero"
+        style={{
+          backgroundImage: `linear-gradient(rgba(195, 81, 0, 0.9), rgba(0, 0, 0, 0.7)), url('/assets/images/CAN2025.png')`,
+        }}
+      >
         <div className="hero-content">
           <h1 className="hero-title">EXPERIENCE THE MAGIC OF</h1>
           <h2 className="hero-subtitle">{event.name.toUpperCase()}</h2>
@@ -33,7 +54,7 @@ const EventDetails = () => {
           <div className="highlight-title-container">
             <h2 className="highlight-title">{event.location}</h2>
           </div>
-          
+
           <div className="highlight-grid">
             <div className="highlight-text-items">
               <div className="highlight-item">
@@ -51,7 +72,7 @@ const EventDetails = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="highlight-image">
           <img src={event.image} alt={event.name} />
         </div>

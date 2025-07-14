@@ -8,31 +8,7 @@ const EventQRGenerator = () => {
   // Crée une référence pour chaque QR
   const qrRefs = useRef({});
 
-  // Fonction de téléchargement QR fiable
-  const handleDownloadQR = (event) => {
-    const svg = qrRefs.current[event.id];
-    if (!svg) return;
-    const serializer = new window.XMLSerializer();
-    const svgString = serializer.serializeToString(svg);
-    const img = new window.Image();
-    const svg64 = window.btoa(unescape(encodeURIComponent(svgString)));
-    const image64 = 'data:image/svg+xml;base64,' + svg64;
-    img.onload = function () {
-      const canvas = document.createElement('canvas');
-      canvas.width = 150;
-      canvas.height = 150;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, 150, 150);
-      const pngFile = canvas.toDataURL('image/png');
-      const downloadLink = document.createElement('a');
-      downloadLink.href = pngFile;
-      downloadLink.download = `${event.name.replace(/\s+/g, '_')}_QR.png`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    };
-    img.src = image64;
-  };
+
 }
   return (
     <div className="qr-generator">
