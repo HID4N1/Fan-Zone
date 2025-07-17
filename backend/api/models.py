@@ -41,17 +41,6 @@ class Event(models.Model):
     def __str__(self):
         return f"{self.name} - {self.date.strftime('%Y-%m-%d')}"
 
-class FanZone(models.Model):
-    name = models.CharField(max_length=100)
-    adresse = models.CharField(max_length=255, blank=True)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='fanzone_images/', blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
 class TransportType(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=10, choices=[("tram", "Tram"), ("bus", "Bus")], unique=True)
@@ -83,6 +72,18 @@ class Station(models.Model):
     def __str__(self):
         return f"{self.name} ({self.line.name})"
 
+class FanZone(models.Model):
+    name = models.CharField(max_length=100)
+    adresse = models.CharField(max_length=255, blank=True)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='fanzone_images/', blank=True, null=True)
+    Nearest_Fanzone_station = models.ForeignKey(Station, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+    
 class Route(models.Model):
     transport_type = models.CharField(max_length=10)
     start_station = models.ForeignKey(Station, related_name='start_routes', on_delete=models.CASCADE)

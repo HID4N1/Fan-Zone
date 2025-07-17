@@ -47,7 +47,7 @@ const EventDetails = () => {
           <h1 className="hero-title">EXPERIENCE THE MAGIC OF</h1>
           <h2 className="hero-subtitle">{event.name.toUpperCase()}</h2>
           <p className="hero-description">{event.description}</p>
-          <button className="cta-button" onClick={handleFindYourWay}>
+          <button className="cta-button" >
             Find Your Way</button>
         </div>
       </div>
