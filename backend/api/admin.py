@@ -2,11 +2,9 @@ from django.contrib import admin
 from .models import Event, FanZone, Station, Route
 
 from django.contrib import admin
-from .models import Event, FanZone, Station, Route
+from .models import Event, FanZone, Station, Route, TransportType, Line
 from django import forms
 
-from django import forms
-from .models import Event
 
 class TimeStringField(forms.TimeField):
     def to_python(self, value):
@@ -35,4 +33,6 @@ class EventAdmin(admin.ModelAdmin):
 admin.site.register(Event, EventAdmin)
 admin.site.register(FanZone)
 admin.site.register(Station)
+admin.site.register(TransportType)
+admin.site.register(Line)
 admin.site.register(Route)

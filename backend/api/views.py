@@ -29,8 +29,6 @@ class PublicFanZoneListView(generics.ListAPIView):
     serializer_class = FanZoneSerializer
     permission_classes = [AllowAny]
 
-
-
 class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
@@ -75,11 +73,11 @@ class EventByQRCodeView(APIView):
             return Response({"detail": "Event not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
-
-
 class StationViewSet(viewsets.ModelViewSet):
     queryset = Station.objects.all()
     serializer_class = StationSerializer
+
+
 
 class RouteViewSet(viewsets.ModelViewSet):
     queryset = Route.objects.all()

@@ -52,15 +52,37 @@ class FanZone(models.Model):
     def __str__(self):
         return self.name
 
-class Station(models.Model):
-    name = models.CharField(max_length=100)
-    transport_type = models.CharField(max_length=10, choices=[("tram", "Tram"), ("bus", "Bus")])
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+class TransportType(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=10, choices=[("tram", "Tram"), ("bus", "Bus")], unique=True)
 
     def __str__(self):
-        return f"{self.name} - {self.transport_type}"
-    
+        return self.get_name_display()
+
+class Line(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=7, help_text="Hex color code (e.g., #FF5733)")
+
+    def __str__(self):
+        return self.name
+
+class Station(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    transport_type = models.ForeignKey(TransportType, on_delete=models.CASCADE)
+    line = models.ForeignKey(Line, on_delete=models.CASCADE, related_name="stations")
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    order = models.PositiveIntegerField(help_text="Order of the station in the line")
+
+    class Meta:
+        unique_together = ("line", "order")
+        ordering = ["order"]
+
+    def __str__(self):
+        return f"{self.name} ({self.line.name})"
+
 class Route(models.Model):
     transport_type = models.CharField(max_length=10)
     start_station = models.ForeignKey(Station, related_name='start_routes', on_delete=models.CASCADE)

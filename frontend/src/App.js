@@ -23,10 +23,7 @@ import Contact from './pages/contact';
 import About from './pages/About';
 
 import EventDetails from "./pages/EventDetails";
-import TransportChoice from "./pages/TransportChoice";
-import StationNavigation from "./pages/StationNavigation";
-import LiveRoute from "./pages/LiveRoute";
-import FanZoneWalk from "./pages/FanZoneWalk";
+
 
 
 import './App.css';
@@ -49,10 +46,6 @@ function App() {
 
 
             <Route path="/event/:eventId" element={<EventDetails />} />
-            <Route path="/transport-choice" element={<TransportChoice />} />
-            <Route path="/station-navigation" element={<StationNavigation />} />
-            <Route path="/live-route" element={<LiveRoute />} />
-            <Route path="/fanzone-walk" element={<FanZoneWalk />} />
           </Route>
 
           {/* Admin login route */}
