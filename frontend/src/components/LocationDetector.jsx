@@ -7,16 +7,19 @@ const LocationDetector = ({ onLocationDetected, onError }) => {
       return;
     }
 
-    const watchId = navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
       pos => {
+        console.log('LocationDetector: position obtained', pos);
         const { latitude, longitude } = pos.coords;
         onLocationDetected({ lat: latitude, lng: longitude });
       },
-      err => onError(err.message),
+      err => {
+        console.error('LocationDetector: error obtaining position', err);
+        onError(err.message);
+      },
       { enableHighAccuracy: true }
     );
 
-    return () => navigator.geolocation.clearWatch(watchId);
   }, [onLocationDetected, onError]);
 
   return null; 

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./EventDetails.css";
-import { useNavigate } from "react-router-dom";
-
 
 const EventDetails = () => {
   const { eventId } = useParams();
+  const navigate = useNavigate();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -47,8 +45,9 @@ const EventDetails = () => {
           <h1 className="hero-title">EXPERIENCE THE MAGIC OF</h1>
           <h2 className="hero-subtitle">{event.name.toUpperCase()}</h2>
           <p className="hero-description">{event.description}</p>
-          <button className="cta-button" >
-            Find Your Way</button>
+          <button className="cta-button" onClick={() => navigate(`/transport-selection?eventId=${eventId}`)}>
+            Find Your Way
+          </button>
         </div>
       </div>
 

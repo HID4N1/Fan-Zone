@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-
 import AdminLogin from './admin/Pages/AdminLogin';
 import AdminProtectedRoute from './admin/AdminProtectedRoute';
 import AdminDashboard from './admin/Pages/AdminDashboard';
@@ -14,8 +13,6 @@ import ManageFanzones from './admin/Pages/ManageFanzones';
 import CreateFanZone from './admin/Pages/CreateFanZone';
 import EditFanZone from './admin/Pages/EditFanZone';
 
-
-
 import Home from './pages/Home';
 import Fanzones from './pages/Fanzones';
 import Tickets from './pages/Tickets';
@@ -23,8 +20,7 @@ import Contact from './pages/contact';
 import About from './pages/About';
 
 import EventDetails from "./pages/EventDetails";
-
-
+import TransportSelection from './pages/TransportSelection';
 
 import './App.css';
 
@@ -44,14 +40,13 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/About" element={<About />} />
 
-
             <Route path="/event/:eventId" element={<EventDetails />} />
+            <Route path="/transport-selection" element={<TransportSelection />} />
           </Route>
 
           {/* Admin login route */}
           <Route path="/admin/login" element={<AdminLogin />} />
 
-          
           {/* Admin routes wrapped in AdminLayout */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="dashboard"
@@ -61,7 +56,6 @@ function App() {
                 </AdminProtectedRoute>
               }
             />
-
 
             {/* events routing */}
             <Route path="events" element={
@@ -80,7 +74,6 @@ function App() {
               </AdminProtectedRoute>
             } />
 
-
             {/* fanzones routing */}
             <Route path="fanzones" element={
               <AdminProtectedRoute>
@@ -98,8 +91,6 @@ function App() {
               </AdminProtectedRoute>
             } />
           </Route>
-
-
         </Routes>
       </Router>
     </div>
@@ -107,5 +98,3 @@ function App() {
 }
 
 export default App;
-
-

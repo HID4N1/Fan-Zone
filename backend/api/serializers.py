@@ -44,7 +44,6 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
-# Removed duplicate StationSerializer without line_name
 
 
 class RouteSerializer(serializers.ModelSerializer):

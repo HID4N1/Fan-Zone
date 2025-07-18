@@ -1,0 +1,58 @@
+.transport-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.transport-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, #f9f9f9, #e6f0ff);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  cursor: pointer;
+}
+
+.transport-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+}
+
+
+
+.transport-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  border-bottom: 2px solid #1a73e8;
+  padding-bottom: 6px;
+}
+
+.transport-card p {
+  margin: 6px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.recommended-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #1a73e8;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.transport-card {
+  position: relative;
+}
