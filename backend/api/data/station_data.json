@@ -1,0 +1,1221 @@
+
+[
+
+    {
+      "station_name": "Sidi Moumen Terminus",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5869421,
+      "longitude": -7.5014958,
+      "order": 1
+    },
+    {
+      "station_name": "Ennassim",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5200939,
+      "longitude": -7.6599127,
+      "order": 2
+    },
+    {
+      "station_name": "Mohammed Zefzaf",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5821303,
+      "longitude": -7.5090071,
+      "order": 3
+    },
+    {
+      "station_name": "Centre de Maintenance",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5788003,
+      "longitude": -7.5139217,
+      "order": 4
+    },
+    {
+      "station_name": "Hôpital Sidi Moumen",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5755735,
+      "longitude": -7.5177983,
+      "order": 5
+    },
+    {
+      "station_name": "Attacharouk",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5707943,
+      "longitude": -7.5241872,
+      "order": 6
+    },
+    {
+      "station_name": "Okba Ibn Nafii",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5729113,
+      "longitude": -7.532559,
+      "order": 7
+    },
+    {
+      "station_name": "Forces Auxiliaires",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.572493,
+      "longitude": -7.5538105,
+      "order": 8
+    },
+    {
+      "station_name": "Hay Raja",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5766816,
+      "longitude": -7.5484674,
+      "order": 9
+    },
+    {
+      "station_name": "Ibn Tachfine",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5808406,
+      "longitude": -7.5633887,
+      "order": 10
+    },
+    {
+      "station_name": "Hay Mohammadi",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5841444,
+      "longitude": -7.5569559,
+      "order": 11
+    },
+    {
+      "station_name": "Achouhada",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5766207,
+      "longitude": -7.5744371,
+      "order": 12
+    },
+    {
+      "station_name": "Ali Yaata",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5916232,
+      "longitude": -7.5694383,
+      "order": 13
+    },
+    {
+      "station_name": "Grande Ceinture",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5904069,
+      "longitude": -7.5737654,
+      "order": 14
+    },
+    {
+      "station_name": "Anciens Abattoirs",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5909456,
+      "longitude": -7.5785868,
+      "order": 15
+    },
+    {
+      "station_name": "Bahmad",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.593016,
+      "longitude": -7.5882173,
+      "order": 16
+    },
+    {
+      "station_name": "Casa Voyageurs",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5903553,
+      "longitude": -7.5896849,
+      "order": 17
+    },
+    {
+      "station_name": "Place Al Yassir",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5932176,
+      "longitude": -7.5977797,
+      "order": 18
+    },
+    {
+      "station_name": "La Résistance",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5934485,
+      "longitude": -7.6031621,
+      "order": 19
+    },
+    {
+      "station_name": "Mohamed Diouri",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5936875,
+      "longitude": -7.6077596,
+      "order": 20
+    },
+    {
+      "station_name": "Marché Central",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5948848,
+      "longitude": -7.6119963,
+      "order": 21
+    },
+    {
+      "station_name": "Place des Nations Unies",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5949962,
+      "longitude": -7.6186635,
+      "order": 22
+    },
+    {
+      "station_name": "Place Mohammed V",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5916377,
+      "longitude": -7.6198406,
+      "order": 23
+    },
+    {
+      "station_name": "Avenue Hassan II",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5856066,
+      "longitude": -7.6221799,
+      "order": 24
+    },
+    {
+      "station_name": "Les Hôpitaux",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5771288,
+      "longitude": -7.6170525,
+      "order": 25
+    },
+    {
+      "station_name": "Faculté de Médecine",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5749154,
+      "longitude": -7.6257729,
+      "order": 26
+    },
+    {
+      "station_name": "Abdelmoumen",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5705632,
+      "longitude": -7.6259326,
+      "order": 27
+    },
+    {
+      "station_name": "Bachkou",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5570776,
+      "longitude": -7.6274253,
+      "order": 28
+    },
+    {
+      "station_name": "Mekka",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.557817,
+      "longitude": -7.6297747,
+      "order": 29
+    },
+    {
+      "station_name": "Gare Oasis",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.554127,
+      "longitude": -7.6313118,
+      "order": 30
+    },
+    {
+      "station_name": "Panoramique",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.547182,
+      "longitude": -7.6318613,
+      "order": 31
+    },
+    {
+      "station_name": "Technopark",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5428838,
+      "longitude": -7.6404728,
+      "order": 32
+    },
+    {
+      "station_name": "Zenith",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5365506,
+      "longitude": -7.6645555,
+      "order": 33
+    },
+    {
+      "station_name": "Gare Casa Sud",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5419773,
+      "longitude": -7.650645,
+      "order": 34
+    },
+    {
+      "station_name": "Facultés",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5458466,
+      "longitude": -7.6571703,
+      "order": 35
+    },
+    {
+      "station_name": "Laymoune",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5354796,
+      "longitude": -7.6834065,
+      "order": 36
+    },
+    {
+      "station_name": "Lissasfa Terminus",
+      "transport_type": "Tram",
+      "line_name": "T1",
+      "latitude": 33.5350474,
+      "longitude": -7.6700352,
+      "order": 37
+    },
+  
+  
+    {
+      "station_name": "Sidi Bernoussi Terminus",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.6100859,
+      "longitude": -7.5098188,
+      "order": 1
+    },
+    {
+      "station_name": "Abi Dar El Ghafari",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.6067062,
+      "longitude": -7.5180155,
+      "order": 2
+    },
+    {
+      "station_name": "Gare De Ain Sbaa",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.6076133,
+      "longitude": -7.5240718,
+      "order": 3
+    },
+    {
+      "station_name": "Préfecture Ain Sbaa",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.6022151,
+      "longitude": -7.5300115,
+      "order": 4
+    },
+    {
+      "station_name": "Al Amane",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5929536,
+      "longitude": -7.5400362,
+      "order": 5
+    },
+    {
+      "station_name": "Al wifaq",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5957437,
+      "longitude": -7.5379072,
+      "order": 6
+    },
+    {
+      "station_name": "Dar Laman",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5939581,
+      "longitude": -7.5543994,
+      "order": 7
+    },
+    {
+      "station_name": "Carrières Centrales",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5897557,
+      "longitude": -7.5613688,
+      "order": 8
+    },
+    {
+      "station_name": "kissariat Hay Mohammadi",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5860161,
+      "longitude": -7.5624435,
+      "order": 9
+    },
+    {
+      "station_name": "Mdakra",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5811962,
+      "longitude": -7.5634043,
+      "order": 10
+    },
+    {
+      "station_name": "Hay Adil",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5792387,
+      "longitude": -7.5681439,
+      "order": 11
+    },
+    {
+      "station_name": "Cimetière Achohada",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.588747,
+      "longitude": -7.5677931,
+      "order": 12
+    },
+    {
+      "station_name": "Derb Milan",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5707233,
+      "longitude": -7.5809792,
+      "order": 13
+    },
+    {
+      "station_name": "Hay El Farah",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5682583,
+      "longitude": -7.5871927,
+      "order": 14
+    },
+    {
+      "station_name": "Derb Sultan",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5721699,
+      "longitude": -7.5958496,
+      "order": 15
+    },
+    {
+      "station_name": "Place Sraghna",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5693985,
+      "longitude": -7.6013275,
+      "order": 16
+    },
+    {
+      "station_name": "El Fida",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5665224,
+      "longitude": -7.6072879,
+      "order": 17
+    },
+    {
+      "station_name": "2 Mars",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5691439,
+      "longitude": -7.6126952,
+      "order": 18
+    },
+    {
+      "station_name": "Hermitage",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5666079,
+      "longitude": -7.6209496,
+      "order": 19
+    },
+    {
+      "station_name": "Anoual",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5694635,
+      "longitude": -7.6249261,
+      "order": 20
+    },
+    {
+      "station_name": "Derb Ghalef",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5701564,
+      "longitude": -7.6317685,
+      "order": 21
+    },
+    {
+      "station_name": "Riviera",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5621584,
+      "longitude": -7.6407346,
+      "order": 22
+    },
+    {
+      "station_name": "Ghandi",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5687995,
+      "longitude": -7.6446343,
+      "order": 23
+    },
+    {
+      "station_name": "Beauséjour",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5684105,
+      "longitude": -7.6492935,
+      "order": 24
+    },
+    {
+      "station_name": "Anfa Clubs",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5605443,
+      "longitude": -7.6548366,
+      "order": 25
+    },
+    {
+      "station_name": "Anfa Park",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5630717,
+      "longitude": -7.6573132,
+      "order": 26
+    },
+    {
+      "station_name": "Place Financière",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5623005,
+      "longitude": -7.6608736,
+      "order": 27
+    },
+    {
+      "station_name": "Abdellah Ben Cherif",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.565862,
+      "longitude": -7.6603124,
+      "order": 28
+    },
+    {
+      "station_name": "Cité De L'air",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5692326,
+      "longitude": -7.6617853,
+      "order": 29
+    },
+    {
+      "station_name": "Sidi Abderrahmane",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5720526,
+      "longitude": -7.6694038,
+      "order": 30
+    },
+    {
+      "station_name": "Hay Hassani",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5702887,
+      "longitude": -7.678495,
+      "order": 31
+    },
+    {
+      "station_name": "Littoral",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5808844,
+      "longitude": -7.6748589,
+      "order": 32
+    },
+    {
+      "station_name": "Ain Diab Plage Terminus",
+      "transport_type": "Tram",
+      "line_name": "T2",
+      "latitude": 33.5874229,
+      "longitude": -7.6807573,
+      "order": 33
+    },
+  
+  
+    {
+      "station_name": "Casa Port Terminus",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5979545,
+      "longitude": -7.6109865,
+      "order": 1
+    },
+    {
+      "station_name": "Mohammed Smiha",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5926779,
+      "longitude": -7.6086744,
+      "order": 2
+    },
+    {
+      "station_name": "Place de la Victoire",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5891388,
+      "longitude": -7.6088788,
+      "order": 3
+    },
+    {
+      "station_name": "Mohammed Zerktouni",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.0039912,
+      "longitude": -7.621719,
+      "order": 4
+    },
+    {
+      "station_name": "Habous",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5745744,
+      "longitude": -7.5970263,
+      "order": 5
+    },
+    {
+      "station_name": "Garage Allal",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.577719,
+      "longitude": -7.6000413,
+      "order": 6
+    },
+    {
+      "station_name": "Derb Tolba",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5712092,
+      "longitude": -7.5968214,
+      "order": 7
+    },
+    {
+      "station_name": "Derb Chorfa",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5664626,
+      "longitude": -7.595604,
+      "order": 8
+    },
+    {
+      "station_name": "Abou Chouaïb Doukali",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5614914,
+      "longitude": -7.5946634,
+      "order": 9
+    },
+    {
+      "station_name": "Afriquia",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5375047,
+      "longitude": -7.6646289,
+      "order": 10
+    },
+    {
+      "station_name": "Dar Attouzani",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5489217,
+      "longitude": -7.5865191,
+      "order": 11
+    },
+    {
+      "station_name": "Bd Mohammed VI",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.547551,
+      "longitude": -7.584566,
+      "order": 12
+    },
+    {
+      "station_name": "6 novembre",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5486925,
+      "longitude": -7.5786446,
+      "order": 13
+    },
+    {
+      "station_name": "Abdessalam Ennaciri",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5484005,
+      "longitude": -7.5726649,
+      "order": 14
+    },
+    {
+      "station_name": "Jardin Alesco",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5497522,
+      "longitude": -7.5662041,
+      "order": 15
+    },
+    {
+      "station_name": "Hay Lalla Meriem",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5572826,
+      "longitude": -7.5580043,
+      "order": 16
+    },
+    {
+      "station_name": "Idriss El Allam",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5597022,
+      "longitude": -7.5508969,
+      "order": 17
+    },
+    {
+      "station_name": "Abdelkader Essahraoui",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5557605,
+      "longitude": -7.5475313,
+      "order": 18
+    },
+    {
+      "station_name": "10-Mars",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.5353506,
+      "longitude": -7.5959757,
+      "order": 19
+    },
+    {
+      "station_name": "Hay Al Wahda Terminus",
+      "transport_type": "Tram",
+      "line_name": "T3",
+      "latitude": 33.545781,
+      "longitude": -7.5473727,
+      "order": 20
+    },
+  
+    
+    {
+      "station_name": "Parc de la ligue arabe Terminus",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.587949,
+      "longitude": -7.6217331,
+      "order": 1
+    },
+    {
+      "station_name": "Mers Sultan",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5697535,
+      "longitude": -7.608839,
+      "order": 2
+    },
+    {
+      "station_name": "Jaber Ibn Hayane",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5887844,
+      "longitude": -7.6076591,
+      "order": 3
+    },
+    {
+      "station_name": "La Gironde",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5877884,
+      "longitude": -7.6011649,
+      "order": 4
+    },
+    {
+      "station_name": "Ifni",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5847669,
+      "longitude": -7.5981333,
+      "order": 5
+    },
+    {
+      "station_name": "Ain Borja",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5803669,
+      "longitude": -7.5919089,
+      "order": 6
+    },
+    {
+      "station_name": "Gare Oulad Ziane",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.575897,
+      "longitude": -7.5856171,
+      "order": 7
+    },
+    {
+      "station_name": "Hay Tissir",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5733019,
+      "longitude": -7.5832613,
+      "order": 8
+    },
+    {
+      "station_name": "Chtaiba",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5653367,
+      "longitude": -7.5709283,
+      "order": 9
+    },
+    {
+      "station_name": "Boulevard du Nil",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.558456,
+      "longitude": -7.5688528,
+      "order": 10
+    },
+    {
+      "station_name": "Hay Assalama",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5610258,
+      "longitude": -7.560188,
+      "order": 11
+    },
+    {
+      "station_name": "Mohammed Bouziane",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5635784,
+      "longitude": -7.5542861,
+      "order": 12
+    },
+    {
+      "station_name": "Idriss El Harti",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5614169,
+      "longitude": -7.5509484,
+      "order": 13
+    },
+    {
+      "station_name": "Hay El Falah",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5599758,
+      "longitude": -7.550001,
+      "order": 14
+    },
+    {
+      "station_name": "Faculté Ben Msik",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5661003,
+      "longitude": -7.5429819,
+      "order": 15
+    },
+    {
+      "station_name": "Mohammed Jaudar",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5684055,
+      "longitude": -7.5361432,
+      "order": 16
+    },
+    {
+      "station_name": "Moulay Rachid",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5675448,
+      "longitude": -7.5452441,
+      "order": 17
+    },
+    {
+      "station_name": "Zone Industrielle",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.6013247,
+      "longitude": -7.4994285,
+      "order": 18
+    },
+    {
+      "station_name": "Mohammed Erradi Terminus",
+      "transport_type": "Tram",
+      "line_name": "T4",
+      "latitude": 33.5691033,
+      "longitude": -7.5179318,
+      "order": 19
+    },
+    {
+        "station_name": "Salmia 2 Terminus",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5368301,
+        "longitude": -7.5503612,
+        "order": 1
+      },
+    {
+        "station_name": "Sbata",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5376589,
+        "longitude": -7.564046,
+        "order": 2
+      },
+      {
+        "station_name": "Stade Tessema",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5442729,
+        "longitude": -7.5581178,
+        "order": 3
+      },
+      {
+        "station_name": "Al Joulane",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5461248,
+        "longitude": -7.5641207,
+        "order": 4
+      },
+      {
+        "station_name": "Lahrizi",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5399858,
+        "longitude": -7.568392,
+        "order": 5
+      },
+      {
+        "station_name": "Jardin Sunday",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.536493,
+        "longitude": -7.5743985,
+        "order": 6
+      },
+      {
+        "station_name": "Amgala",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5399856,
+        "longitude": -7.5787872,
+        "order": 7
+      },
+      {
+        "station_name": "Al Qods",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5437312,
+        "longitude": -7.5818939,
+        "order": 8
+      },
+      {
+        "station_name": "Sefrou",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5422458,
+        "longitude": -7.5886256,
+        "order": 9
+      },
+      {
+        "station_name": "Taza",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5413602,
+        "longitude": -7.5932325,
+        "order": 10
+      },
+      {
+        "station_name": "Al Inara",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5396141,
+        "longitude": -7.5989358,
+        "order": 11
+      },
+      {
+        "station_name": "Oulad Haddou",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5370282,
+        "longitude": -7.6053398,
+        "order": 12
+      },
+      {
+        "station_name": "Hay Chrifa",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.535032,
+        "longitude": -7.6099651,
+        "order": 13
+      },
+      {
+        "station_name": "Taddart",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5320443,
+        "longitude": -7.6166909,
+        "order": 14
+      },
+      {
+        "station_name": "Azzohour",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5304204,
+        "longitude": -7.6234535,
+        "order": 15
+      },
+      {
+        "station_name": "Californie",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5411922,
+        "longitude": -7.626038,
+        "order": 16
+      },
+      {
+        "station_name": "Casa Nearshore",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5295213,
+        "longitude": -7.6388031,
+        "order": 17
+      },
+      {
+        "station_name": "Al Moustakbal",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5315627,
+        "longitude": -7.646775,
+        "order": 18
+      },
+      {
+        "station_name": "Sidi Maarouf",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5286123,
+        "longitude": -7.646462,
+        "order": 19
+      },
+      {
+        "station_name": "Omar El Khayam Terminus",
+        "transport_type": "Bus",
+        "line_name": "BW1",
+        "latitude": 33.5396774,
+        "longitude": -7.6663809,
+        "order": 20
+      },
+    
+      
+      {
+        "station_name": "Ouled Azzouz Terminus",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5185449,
+        "longitude": -7.7576336,
+        "order": 1
+      },
+      {
+        "station_name": "La Ferme",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5225449,
+        "longitude": -7.7511376,
+        "order": 2
+      },
+      {
+        "station_name": "Ouled Ahmed",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.0282151,
+        "longitude": -7.0756506,
+        "order": 3
+      },
+      {
+        "station_name": "Les Ecoles",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5266262,
+        "longitude": -7.7397676,
+        "order": 4
+      },
+      {
+        "station_name": "Oued Sbou",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5285427,
+        "longitude": -7.733826,
+        "order": 5
+      },
+      {
+        "station_name": "Errahma",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5500364,
+        "longitude": -7.69789,
+        "order": 6
+      },
+      {
+        "station_name": "Les Jardins D'Errahma",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5345793,
+        "longitude": -7.72377,
+        "order": 7
+      },
+      {
+        "station_name": "La Perception",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5379458,
+        "longitude": -7.7185567,
+        "order": 8
+      },
+      {
+        "station_name": "La Rocade",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5438142,
+        "longitude": -7.709079,
+        "order": 9
+      },
+      {
+        "station_name": "Abouab Oulfa",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5622338,
+        "longitude": -7.6689117,
+        "order": 10
+      },
+      {
+        "station_name": "Moulay Thami",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5484912,
+        "longitude": -7.7011037,
+        "order": 11
+      },
+      {
+        "station_name": "Essafa",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5508772,
+        "longitude": -7.6960686,
+        "order": 12
+      },
+      {
+        "station_name": "Haj Fateh",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5532501,
+        "longitude": -7.6898332,
+        "order": 13
+      },
+      {
+        "station_name": "Moulouya",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5563544,
+        "longitude": -7.6835236,
+        "order": 14
+      },
+      {
+        "station_name": "Oued Beht",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5583094,
+        "longitude": -7.6793888,
+        "order": 15
+      },
+      {
+        "station_name": "Oued Laou",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5613492,
+        "longitude": -7.6697997,
+        "order": 16
+      },
+      {
+        "station_name": "Oued Oum Rabia",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5633309,
+        "longitude": -7.6650721,
+        "order": 17
+      },
+      {
+        "station_name": "Les Musées",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5650847,
+        "longitude": -7.6605555,
+        "order": 18
+      },
+      {
+        "station_name": "Aéropostale",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5594236,
+        "longitude": -7.6679458,
+        "order": 19
+      },
+      {
+        "station_name": "C.I.L.",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5672889,
+        "longitude": -7.6561487,
+        "order": 20
+      },
+      {
+        "station_name": "Yaacoub Al Mansour",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5695483,
+        "longitude": -7.652426,
+        "order": 21
+      },
+      {
+        "station_name": "Oulmes Terminus",
+        "transport_type": "Bus",
+        "line_name": "BW2",
+        "latitude": 33.5715969,
+        "longitude": -7.6485714,
+        "order": 22
+      }
+    
+]

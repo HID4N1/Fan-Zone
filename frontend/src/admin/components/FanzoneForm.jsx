@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../../services/api';
 
 const FanzoneForm = ({ initialData = {}, onSubmit, isEdit = false }) => {
   const [name, setName] = useState(initialData.name || '');
@@ -8,6 +9,8 @@ const FanzoneForm = ({ initialData = {}, onSubmit, isEdit = false }) => {
   const [description, setDescription] = useState(initialData.description || '');
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(initialData.image || null);
+  const [nearestStation, setNearestStation] = useState(initialData.Nearest_Fanzone_station ? initialData.Nearest_Fanzone_station.id : '');
+  const [stations, setStations] = useState([]);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -17,7 +20,21 @@ const FanzoneForm = ({ initialData = {}, onSubmit, isEdit = false }) => {
     setLongitude(initialData.longitude || '');
     setDescription(initialData.description || '');
     setPreviewImage(initialData.image || null);
+    setNearestStation(initialData.Nearest_Fanzone_station ? initialData.Nearest_Fanzone_station.id : '');
   }, [initialData]);
+
+  useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        const response = await api.get('stations/');
+        console.log('Stations data fetched in FanzoneForm:', response.data);
+        setStations(response.data);
+      } catch (error) {
+        console.error('Failed to fetch stations:', error);
+      }
+    };
+    fetchStations();
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -58,6 +75,7 @@ const FanzoneForm = ({ initialData = {}, onSubmit, isEdit = false }) => {
     if (image) {
       formData.append('image', image);
     }
+    formData.append('Nearest_Fanzone_station_id', nearestStation);
     onSubmit(formData);
   };
 
@@ -111,6 +129,21 @@ const FanzoneForm = ({ initialData = {}, onSubmit, isEdit = false }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+      </div>
+
+      <div>
+        <label>Nearest Station:</label><br />
+        <select
+          value={nearestStation}
+          onChange={(e) => setNearestStation(e.target.value)}
+        >
+          <option value="">Select a station</option>
+          {stations.map((station) => (
+            <option key={station.id} value={station.id}>
+              {station.name} ({station.line_name})
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>

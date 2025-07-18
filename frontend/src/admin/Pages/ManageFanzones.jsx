@@ -73,6 +73,7 @@ const ManageFanzones = () => {
             <th>ID</th>
             <th>Name</th>
             <th>Adresse</th>
+            <th>Nearest Station</th>
             <th>Image</th>
             <th>Actions</th>
           </tr>
@@ -83,6 +84,7 @@ const ManageFanzones = () => {
               <td>{fanzone.id}</td>
               <td>{fanzone.name}</td>
               <td>{fanzone.adresse}</td>
+              <td>{fanzone.Nearest_Fanzone_station ? `${fanzone.Nearest_Fanzone_station.name} (${fanzone.Nearest_Fanzone_station.line_name})` : ''}</td>
               <td>
                 {fanzone.image ? (
                   <img

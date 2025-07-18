@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -33,7 +33,22 @@ const CreateFanZone = () => {
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [position, setPosition] = useState(null);
+  const [nearestStation, setNearestStation] = useState('');
+  const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(false);
+
+    React.useEffect(() => {
+      const fetchStations = async () => {
+        try {
+          const response = await api.get('stations/');
+          console.log('Stations data fetched in CreateFanZone:', response.data);
+          setStations(response.data);
+        } catch (error) {
+          console.error('Failed to fetch stations:', error);
+        }
+      };
+      fetchStations();
+    }, []);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -56,6 +71,7 @@ const CreateFanZone = () => {
     formData.append('description', description);
     formData.append('latitude', position.lat);
     formData.append('longitude', position.lng);
+    formData.append('Nearest_Fanzone_station_id', nearestStation);
 
     try {
       await api.post('fanzones/', formData, {
@@ -69,6 +85,7 @@ const CreateFanZone = () => {
       setAddress('');
       setDescription('');
       setPosition(null);
+      setNearestStation('');
       navigate('/admin/fanzones');
     } catch (error) {
       console.error('Failed to create fanzone:', error);
@@ -121,6 +138,21 @@ const CreateFanZone = () => {
             disabled={loading}
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
+        </div>
+        <div>
+          <label>Nearest Station:</label><br />
+          <select
+            value={nearestStation}
+            onChange={(e) => setNearestStation(e.target.value)}
+            disabled={loading}
+          >
+            <option value="">Select a station</option>
+            {stations.map((station) => (
+              <option key={station.id} value={station.id}>
+                {station.name} ({station.line_name})
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label>Select Location on Map:</label>

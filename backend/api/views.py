@@ -18,7 +18,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class FanZoneViewSet(viewsets.ModelViewSet):
-    queryset = FanZone.objects.all()
+    queryset = FanZone.objects.select_related('Nearest_Fanzone_station__line').all()
     serializer_class = FanZoneSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     parser_classes = [MultiPartParser, FormParser]
@@ -74,7 +74,7 @@ class EventByQRCodeView(APIView):
 
 
 class StationViewSet(viewsets.ModelViewSet):
-    queryset = Station.objects.all()
+    queryset = Station.objects.select_related('line').all()
     serializer_class = StationSerializer
 
 

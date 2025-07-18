@@ -32,7 +32,10 @@ class EventAdmin(admin.ModelAdmin):
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(FanZone)
-admin.site.register(Station)
+class StationAdmin(admin.ModelAdmin):
+    list_filter = ['line__name']
+
+admin.site.register(Station, StationAdmin)
 admin.site.register(TransportType)
 admin.site.register(Line)
 admin.site.register(Route)
