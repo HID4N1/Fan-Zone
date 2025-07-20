@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LocationDetector from '../components/LocationDetector';
 import './TransportSelection.css';
 
 const TransportSelection = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const eventId = queryParams.get('eventId');
 
@@ -42,8 +43,17 @@ const TransportSelection = () => {
           return res.json();
         })
         .then(data => {
-          // console.log('Nearest stations data:', data);
-          setNearestStations(data);
+          // Add latitude and longitude to each station object if missing
+          const enrichedData = {};
+          for (const [key, station] of Object.entries(data)) {
+            enrichedData[key] = {
+              ...station,
+              latitude: station.latitude || station.lat || null,
+              longitude: station.longitude || station.lng || null,
+            };
+          }
+          console.log('Enriched nearest stations data:', enrichedData);
+          setNearestStations(enrichedData);
           setLoading(false);
           setHasFetched(true);
         })
@@ -67,14 +77,14 @@ const TransportSelection = () => {
             key={transportType}
             className={`transport-card${index === 0 ? ' bold' : ''}`}
             onClick={() => {
-              // Placeholder for click handler
-              console.log(`Clicked on ${transportType} card`);
+              console.log('Station clicked:', station);
+              navigate('/walking-route', { state: { station, userLocation } });
             }}
             role="button"
             tabIndex={0}
             onKeyPress={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                console.log(`Clicked on ${transportType} card`);
+                navigate('/walking-route', { state: { station, userLocation } });
               }
             }}
           >

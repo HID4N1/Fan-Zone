@@ -44,8 +44,6 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
-
-
 class RouteSerializer(serializers.ModelSerializer):
     start_station = StationSerializer(read_only=True)
     end_station = StationSerializer(read_only=True)

@@ -12,6 +12,7 @@ import math
 import requests
 import os
 from dotenv import load_dotenv
+ORS_API_KEY = os.getenv('ORS_API_KEY')
 
 load_dotenv()  
 
@@ -163,9 +164,35 @@ class NearestStationView(APIView):
                     "line_name": nearest_station.line.name,
                     "walking_time_minutes": round(min_duration, 2) if min_duration is not None else None,
                     "distance_km": round(min_distance, 3) if min_distance is not None else None,
+                    "latitude": nearest_station.latitude,
+                    "longitude": nearest_station.longitude,
                 }
 
         if not nearest_stations:
             print("No nearest stations found.")
 
         return Response(nearest_stations, status=status.HTTP_200_OK)
+
+class WalkingRouteView(APIView):
+    def post(self, request):
+        user_location = request.data.get('user_location')  # [lng, lat]
+        station_location = request.data.get('station_location')  # [lng, lat]
+
+        if not user_location or not station_location:
+            return Response({"error": "Missing coordinates"}, status=status.HTTP_400_BAD_REQUEST)
+
+        ors_url = "https://api.openrouteservice.org/v2/directions/foot-walking"
+        headers = {"Authorization": ORS_API_KEY}
+        body = {
+            "coordinates": [user_location, station_location]
+        }
+
+        response = requests.post(ors_url, json=body, headers=headers)
+
+        if response.status_code == 200:
+            return Response(response.json())
+        else:
+            return Response(
+                {"error": "Failed to fetch walking route", "details": response.text},
+                status=response.status_code,
+            )
