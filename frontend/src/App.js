@@ -22,6 +22,7 @@ import About from './pages/About';
 import EventDetails from "./pages/EventDetails";
 import TransportSelection from './pages/TransportSelection';
 import WalkingRoute from './pages/WalkingRoute';
+import TransportRoute from './pages/TransportRoute';
 
 import './App.css';
 
@@ -44,6 +45,7 @@ function App() {
             <Route path="/event/:eventId" element={<EventDetails />} />
             <Route path="/transport-selection" element={<TransportSelection />} />
             <Route path="/walking-route" element={<WalkingRoute />} />
+            <Route path="/transport-route" element={<TransportRoute />} />
           </Route>
 
           {/* Admin login route */}

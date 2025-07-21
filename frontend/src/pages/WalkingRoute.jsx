@@ -1,38 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
-import { useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import './WalkingRoute.css';
-import L from 'leaflet';
 import WatchPosition from '../components/watchPosition';
 import axios from 'axios';
 
-// Fix Leaflet icon paths
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-});
+const MapDisplay = ({ mapHtml }) => {
+  return (
+    <div
+      className="map-container"
+      dangerouslySetInnerHTML={{ __html: mapHtml }}
+      style={{ height: '100%', width: '100%' }}
+    />
+  );
+};
 
-const SetViewOnUserLocation = ({ coords }) => {
-  const map = useMap();
-  useEffect(() => {
-    if (coords) {
-      map.setView(coords, 30);
-    }
-  }, [coords, map]);
-  return null;
+MapDisplay.propTypes = {
+  mapHtml: PropTypes.string.isRequired,
 };
 
 const WalkingRoute = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
+  const eventId = state?.eventId ?? null;
 
   const [userLocation, setUserLocation] = useState(state?.userLocation ?? null);
   const [locationError, setLocationError] = useState(null);
-  const [routeCoords, setRouteCoords] = useState([]);
+  const [mapHtml, setMapHtml] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
+  const [arrivalConfirmed, setArrivalConfirmed] = useState(false);
+  const [distanceMeters, setDistanceMeters] = useState(null);
+  const [showArrivalModal, setShowArrivalModal] = useState(false);
 
   const { station } = state || {};
   const userLat = userLocation?.lat ?? null;
@@ -40,45 +40,127 @@ const WalkingRoute = () => {
   const stationLat = station?.latitude ?? null;
   const stationLng = station?.longitude ?? null;
 
-
-  useEffect(() => {
-    const fetchRoute = async () => {
-      if (
-        userLat === null ||
-        userLng === null ||
-        stationLat === null ||
-        stationLng === null
-      ) return;
-
-      try {
-        const response = await axios.post('http://localhost:8000/api/walking-route/', {
+  // Function to fetch walking route map HTML from backend API
+  const fetchRoute = async () => {
+    if (
+      userLat === null ||
+      userLng === null ||
+      stationLat === null ||
+      stationLng === null
+    ) {
+      return;
+    }
+    setLoading(true);
+    setFetchError(null);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/walking-route/`,
+        {
           user_location: [userLng, userLat],
           station_location: [stationLng, stationLat],
-        });
-
-        if (response.data?.features?.length > 0) {
-          const coords = response.data.features[0].geometry.coordinates;
-          const latLngCoords = coords.map(([lng, lat]) => [lat, lng]);
-          setRouteCoords(latLngCoords);
-        } else {
-          setRouteCoords([[userLat, userLng], [stationLat, stationLng]]);
         }
-      } catch (error) {
-        console.error('Error fetching walking route:', error);
-        setRouteCoords([[userLat, userLng], [stationLat, stationLng]]);
-      }
-    };
+      );
 
+      if (response.data?.map_html) {
+        setMapHtml(response.data.map_html);
+      } else {
+        setMapHtml(null);
+        setFetchError('No map data received.');
+      }
+    } catch (error) {
+      console.error('Error fetching walking route:', error);
+      setMapHtml(null);
+      setFetchError('Failed to fetch walking route. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchRoute();
   }, [userLat, userLng, stationLat, stationLng]);
 
-  // These conditional returns come AFTER the hook calls
+  // Helper function to calculate distance between two lat/lng points in meters
+  const getDistanceMeters = (lat1, lng1, lat2, lng2) => {
+    const toRad = (value) => (value * Math.PI) / 180;
+    const R = 6371000; // Earth radius in meters
+    const dLat = toRad(lat2 - lat1);
+    const dLng = toRad(lng2 - lng1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  useEffect(() => {
+    if (
+      userLat === null ||
+      userLng === null ||
+      stationLat === null ||
+      stationLng === null
+    )
+      return;
+
+    if (arrivalConfirmed) return;
+
+    const distance = getDistanceMeters(userLat, userLng, stationLat, stationLng);
+    setDistanceMeters(distance);
+
+    const threshold = 20; // meters
+
+    if (distance <= threshold) {
+      setShowArrivalModal(true);
+    }
+  }, [userLat, userLng, stationLat, stationLng, arrivalConfirmed]);
+
+  const handleConfirmArrival = () => {
+    setArrivalConfirmed(true);
+    setShowArrivalModal(false);
+      navigate('/transport-route', {
+        state: {
+          userLocation: {
+            lat: userLat,
+            lng: userLng,
+          },
+          eventId,
+        },
+      });
+  };
+
+  const handleCancelArrival = () => {
+    setShowArrivalModal(false);
+  };
+
+  useEffect(() => {
+    if (!mapHtml || !userLat || !userLng) return;
+
+    const timeoutId = setTimeout(() => {
+      const mapContainer = document.querySelector('.map-container');
+      if (!mapContainer) return;
+
+      if (window.L && window.L.map) {
+        // If map instance is accessible, add marker via Leaflet API
+        // This requires map instance reference, which we don't have here
+        // So fallback to DOM overlay
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [mapHtml, userLat, userLng]);
+
+  // Error handling for missing or invalid coordinates
   if (!state || !station || !userLocation) {
     return (
       <div>
         <h2>Walking Route</h2>
         <p>Station or user location data is missing.</p>
-        <button onClick={() => navigate(-1)}>Go Back</button>
+        <button className="back-button" onClick={() => navigate(-1)}>
+          Go Back
+        </button>
       </div>
     );
   }
@@ -87,45 +169,52 @@ const WalkingRoute = () => {
     userLng === null ||
     stationLat === null ||
     stationLng === null
-  ) {
-    return (
+  ) 
+  {
+  return (
       <div>
         <h2>Walking Route</h2>
         <p>Invalid or missing coordinates for user or station.</p>
-        <button onClick={() => navigate(-1)}>Go Back</button>
+        <button className="back-button" onClick={() => navigate(-1)}>
+          Go Back
+        </button>
       </div>
     );
   }
-
-  const userCoords = [userLat, userLng];
-  const stationCoords = [stationLat, stationLng];
-
-
 
   return (
     <div className="container">
       <h2 className="heading">Walking Route to {station.station_name}</h2>
       {locationError && <p className="error">Location error: {locationError}</p>}
-      <MapContainer center={userCoords} zoom={15} className="mapContainer">
-        <SetViewOnUserLocation coords={userCoords} />
-        <TileLayer
-          attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={userCoords}>
-          <Popup>Your Location</Popup>
-        </Marker>
-        <Marker position={stationCoords}>
-          <Popup>{station.station_name}</Popup>
-        </Marker>
-        <Polyline positions={routeCoords.length > 0 ? routeCoords : [userCoords, stationCoords]} color="blue" />
-      </MapContainer>
-      <WatchPosition
-        onLocationDetected={setUserLocation}
-        onError={setLocationError}
-      />
+      {fetchError && <p className="error">{fetchError}</p>}
+      {distanceMeters !== null && (
+        <div className="distance-display">
+          Distance to station: {distanceMeters.toFixed(1)} meters
+        </div>
+      )}
+      {loading ? (
+        <p>Loading map...</p>
+      ) : mapHtml ? (
+        <MapDisplay mapHtml={mapHtml} />
+      ) : (
+        <p>No map available.</p>
+      )}
+      <WatchPosition onLocationDetected={setUserLocation} onError={setLocationError} />
+
+      {showArrivalModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Arrival Confirmation</h3>
+            <p>You have arrived at {station.station_name}. Do you want to confirm your arrival?</p>
+            <button onClick={handleConfirmArrival}>Confirm</button>
+            <button onClick={handleCancelArrival}>Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+
+WalkingRoute.propTypes = {};
 
 export default WalkingRoute;

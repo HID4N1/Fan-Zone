@@ -173,26 +173,61 @@ class NearestStationView(APIView):
 
         return Response(nearest_stations, status=status.HTTP_200_OK)
 
+import logging
+import openrouteservice
+import folium
+
+logger = logging.getLogger(__name__)
+
 class WalkingRouteView(APIView):
     def post(self, request):
         user_location = request.data.get('user_location')  # [lng, lat]
         station_location = request.data.get('station_location')  # [lng, lat]
 
         if not user_location or not station_location:
+            logger.error("Missing coordinates in request data")
             return Response({"error": "Missing coordinates"}, status=status.HTTP_400_BAD_REQUEST)
 
-        ors_url = "https://api.openrouteservice.org/v2/directions/foot-walking"
-        headers = {"Authorization": ORS_API_KEY}
-        body = {
-            "coordinates": [user_location, station_location]
-        }
+        try:
+            client = openrouteservice.Client(key=ORS_API_KEY)
+            coords = [user_location, station_location]
+            route = client.directions(coordinates=coords, profile='foot-walking', format='geojson')
 
-        response = requests.post(ors_url, json=body, headers=headers)
 
-        if response.status_code == 200:
-            return Response(response.json())
-        else:
-            return Response(
-                {"error": "Failed to fetch walking route", "details": response.text},
-                status=response.status_code,
-            )
+            m = folium.Map(location=list(reversed(user_location)), tiles="cartodbpositron", zoom_start=18)
+
+            # Add blue dot marker for user location
+            folium.CircleMarker(
+            location=list(reversed(user_location)),
+            radius=10,  
+            color='white',
+            weight=3,  
+            fill=True,
+            fill_color='#1E90FF',  
+            fill_opacity=0.9,  
+            ).add_to(m)
+
+            # Add red dot marker for station location
+            folium.CircleMarker(
+                location=list(reversed(station_location)),
+                radius=10,
+                color='white',
+                weight=3,
+                fill=True,
+                fill_color='#FF6347',  
+                fill_opacity=0.9,  
+            ).add_to(m)
+
+            # Add route line
+            route_coords = route['features'][0]['geometry']['coordinates']
+            folium.PolyLine(locations=[list(reversed(coord)) for coord in route_coords], color="blue", weight=5).add_to(m)
+
+
+            map_html = m._repr_html_()
+
+            return Response({"map_html": map_html, "route": route})
+        except Exception as e:
+            import traceback
+            logger.error(f"Error generating walking route: {e}\n{traceback.format_exc()}")
+            return Response({"error": "Error generating walking route"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+

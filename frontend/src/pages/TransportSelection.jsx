@@ -43,7 +43,6 @@ const TransportSelection = () => {
           return res.json();
         })
         .then(data => {
-          // Add latitude and longitude to each station object if missing
           const enrichedData = {};
           for (const [key, station] of Object.entries(data)) {
             enrichedData[key] = {
@@ -58,7 +57,6 @@ const TransportSelection = () => {
           setHasFetched(true);
         })
         .catch(err => {
-          // console.error('Fetch error:', err);
           setError(err.message);
           setLoading(false);
         });
@@ -78,13 +76,17 @@ const TransportSelection = () => {
             className={`transport-card${index === 0 ? ' bold' : ''}`}
             onClick={() => {
               console.log('Station clicked:', station);
-              navigate('/walking-route', { state: { station, userLocation } });
+              navigate('/walking-route', 
+                { state: {
+                   station, userLocation, eventId } });
             }}
             role="button"
             tabIndex={0}
             onKeyPress={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                navigate('/walking-route', { state: { station, userLocation } });
+                navigate('/walking-route',
+                   { state: { 
+                    station, userLocation, eventId } });
               }
             }}
           >
