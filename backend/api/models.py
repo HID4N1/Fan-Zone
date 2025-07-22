@@ -72,6 +72,10 @@ class Station(models.Model):
     def __str__(self):
         return f"{self.name} ({self.line.name})"
 
+class TransfertStation(models.Model):
+    station_1 = models.ForeignKey(Station, related_name='transfers_from', on_delete=models.CASCADE)
+    station_2 = models.ForeignKey(Station, related_name='transfers_to', on_delete=models.CASCADE)
+
 class FanZone(models.Model):
     name = models.CharField(max_length=100)
     adresse = models.CharField(max_length=255, blank=True)

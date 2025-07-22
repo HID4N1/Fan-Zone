@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Event, FanZone, Station, Route
 
 from django.contrib import admin
-from .models import Event, FanZone, Station, Route, TransportType, Line
+from .models import Event, FanZone, Station, Route, TransportType, Line, TransfertStation
 from django import forms
 
 
@@ -37,5 +37,6 @@ class StationAdmin(admin.ModelAdmin):
 
 admin.site.register(Station, StationAdmin)
 admin.site.register(TransportType)
+admin.site.register(TransfertStation)
 admin.site.register(Line)
 admin.site.register(Route)

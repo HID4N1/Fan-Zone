@@ -1,0 +1,15 @@
+[
+  {"line_1": "T1", "station_1": "Place Mohammed V", "line_2": "T4", "station_2": "Parc de la ligue arabe Terminus"},
+  {"line_1": "T1", "station_1": "Okba Ibn Nafii", "line_2": "T4", "station_2": "Moulay Rachid"},
+  {"line_1": "T1", "station_1": "Ibn Tachfine", "line_2": "T2", "station_2": "Mdakra"},
+  {"line_1": "T1", "station_1": "Ali Yaata", "line_2": "T2", "station_2": "Carrières Centrales"},
+  {"line_1": "T1", "station_1": "Abdelmoumen", "line_2": "T2", "station_2": "Anoual"},
+  {"line_1": "T1", "station_1": "Laymoune", "line_2": "BW1", "station_2": "Omar El Khayam Terminus"},
+  {"line_1": "T1", "station_1": "La Résistance", "line_2": "T3", "station_2": "Mohammed Smiha"},
+  {"line_1": "T2", "station_1": "Derb Milan", "line_2": "T4", "station_2": "Hay Tissir"},
+  {"line_1": "T2", "station_1": "Derb Sultan", "line_2": "T3", "station_2": "Derb Tolba"},
+  {"line_1": "T2", "station_1": "Abdellah Ben Cherif", "line_2": "BW2", "station_2": "Aéropostale"},
+  {"line_1": "T3", "station_1": "Idriss El Allam", "line_2": "T4", "station_2": "Hay El Falah"},
+  {"line_1": "T3", "station_1": "Bd Mohammed VI", "line_2": "BW1", "station_2": "Al Qods"},
+  {"line_1": "T3", "station_1": "Place de la Victoire", "line_2": "T4", "station_2": "Jaber Ibn Hayane"}
+]

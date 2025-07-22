@@ -4,7 +4,8 @@
   text-align: center;
   background-color: white;
   font-family: 'Montserrat', sans-serif;
-
+  overflow: auto; /* Ensure scrolling is enabled */
+  height: 100%; 
 }
 
 .App-logo {

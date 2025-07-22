@@ -28,6 +28,11 @@ const EventDetails = () => {
     fetchEvent();
   }, [eventId]);
 
+  // handle click
+  const handleClick = () => {
+    navigate(`/transport-selection?eventId=${eventId}`);
+  };
+
   if (loading) return <div className="loading">Loading event details...</div>;
   if (error) return <div className="not-found">{error}</div>;
   if (!event) return null;
@@ -45,7 +50,7 @@ const EventDetails = () => {
           <h1 className="hero-title">EXPERIENCE THE MAGIC OF</h1>
           <h2 className="hero-subtitle">{event.name.toUpperCase()}</h2>
           <p className="hero-description">{event.description}</p>
-          <button className="cta-button" onClick={() => navigate(`/transport-selection?eventId=${eventId}`)}>
+          <button className="cta-button" onClick={handleClick}>
             Find Your Way
           </button>
         </div>

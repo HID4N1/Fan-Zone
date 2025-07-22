@@ -1,5 +1,6 @@
 from rest_framework import routers
 from django.urls import path, include
+from . import views
 from .views import UserViewSet, FanZoneViewSet, EventViewSet, StationViewSet, RouteViewSet, PublicEventListView, PublicFanZoneListView, PublicEventDetailView, EventByQRCodeView, NearestStationView, WalkingRouteView
 
 router = routers.DefaultRouter()
@@ -7,7 +8,7 @@ router.register(r'users', UserViewSet)
 router.register(r'fanzones', FanZoneViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'stations', StationViewSet)
-router.register(r'routes', RouteViewSet)
+router.register(r'routes', RouteViewSet, basename='route')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -17,6 +18,8 @@ urlpatterns = [
     path('public-fanzones/', PublicFanZoneListView.as_view(), name='public-fanzones'),
     path('nearest-station/', NearestStationView.as_view(), name='nearest-station'),
     path('walking-route/', WalkingRouteView.as_view()),
+    path('stations/by-name/', views.get_station_by_name, name='get_station_by_name'),
+    
 
 ]
 

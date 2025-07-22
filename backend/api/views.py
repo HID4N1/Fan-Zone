@@ -1,3 +1,4 @@
+import logging
 from rest_framework import viewsets, generics
 from django.contrib.auth.models import User
 from .models import Event, FanZone, Station, Route, TransportType
@@ -7,11 +8,11 @@ from django.utils import timezone
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, filters
 import math
-import requests
 import os
 from dotenv import load_dotenv
+from rest_framework.decorators import action
 ORS_API_KEY = os.getenv('ORS_API_KEY')
 
 load_dotenv()  
@@ -61,7 +62,20 @@ class PublicEventListView(generics.ListAPIView):
 class PublicEventDetailView(generics.RetrieveAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny]  
+
+    def get(self, request, *args, **kwargs):
+        event_id = kwargs.get('pk')
+        try:
+            event = Event.objects.get(id=event_id)
+            serializer = self.get_serializer(event)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Event.DoesNotExist:
+            logging.error(f"Event with ID {event_id} does not exist.")
+            return Response({"error": "Event not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            logging.error(f"Error retrieving event details: {e}")
+            return Response({"error": "Internal server error."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class EventByQRCodeView(APIView):
     permission_classes = [AllowAny]
@@ -80,12 +94,192 @@ class EventByQRCodeView(APIView):
 class StationViewSet(viewsets.ModelViewSet):
     queryset = Station.objects.select_related('line').all()
     serializer_class = StationSerializer
-
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'line__name']
 
 class RouteViewSet(viewsets.ModelViewSet):
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
+    permission_classes = [AllowAny]
 
+    @action(detail=True, methods=['get'])
+    def full_route(self, request, pk=None):
+        route = self.get_object()
+        serializer = self.get_serializer(route)
+        return Response(serializer.data)
+
+    
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        full_route = self.get_full_route(instance)
+        serializer = self.get_serializer(instance)
+        data = serializer.data
+        data['full_route'] = full_route
+        return Response(data)
+
+    def get_full_route(self, route):
+        """
+        Compute the full route between start_station and end_station,
+        including stations with their lines, handling combinations of lines
+        of same or different transport types.
+        """
+        logger = logging.getLogger(__name__)
+        from api.models import TransfertStation
+
+        try:
+            start_station = route.start_station
+            end_station = route.end_station
+
+            if not start_station or not end_station:
+                logger.error("Start station or end station is None")
+                return []
+
+            logger.info(f"Start station: {start_station}, End station: {end_station}")
+
+            # If start and end stations are on the same line and transport type
+            if (start_station.line_id == end_station.line_id and
+                start_station.transport_type_id == end_station.transport_type_id):
+                stations = list(start_station.line.stations.filter(
+                    order__gte=min(start_station.order, end_station.order),
+                    order__lte=max(start_station.order, end_station.order)
+                ).order_by('order'))
+                if start_station.order > end_station.order:
+                    stations.reverse()
+                logger.info(f"Direct route stations count: {len(stations)}")
+                return [self.serialize_station(s) for s in stations]
+
+            # If different lines or transport types, find a combined route using TransfertStation model
+            from django.db import models
+            transfer_stations = TransfertStation.objects.filter(
+                models.Q(station_1__line=start_station.line, station_2__line=end_station.line) |
+                models.Q(station_2__line=start_station.line, station_1__line=end_station.line)
+            )
+
+            logger.info(f"Found {transfer_stations.count()} transfer stations")
+
+            if not transfer_stations.exists():
+                # No transfer station found, return start and end stations only
+                logger.warning("No transfer stations found between lines")
+                return [self.serialize_station(start_station), self.serialize_station(end_station)]
+
+
+            # Choose the first transfer station for route
+            transfer = transfer_stations.first()
+            logger.info(f"Using transfer station: {transfer}")
+
+            # Determine which station in transfer corresponds to start line and end line
+            if transfer.station_1.line == start_station.line:
+                transfer_start = transfer.station_1
+                transfer_end = transfer.station_2
+            else:
+                transfer_start = transfer.station_2
+                transfer_end = transfer.station_1
+
+            logger.info(f"Transfer start: {transfer_start}, Transfer end: {transfer_end}")
+
+            # Get route from start_station to transfer_start
+            route_part1 = list(start_station.line.stations.filter(
+                order__gte=min(start_station.order, transfer_start.order),
+                order__lte=max(start_station.order, transfer_start.order)
+            ).order_by('order'))
+            if start_station.order > transfer_start.order:
+                route_part1.reverse()
+
+            # Get route from transfer_end to end_station
+            route_part2 = list(end_station.line.stations.filter(
+                order__gte=min(transfer_end.order, end_station.order),
+                order__lte=max(transfer_end.order, end_station.order)
+            ).order_by('order'))
+            if transfer_end.order > end_station.order:
+                route_part2.reverse()
+
+            # Combine routes, avoid duplicate transfer station
+            full_route = [self.serialize_station(s) for s in route_part1]
+            full_route.extend([self.serialize_station(s) for s in route_part2])
+
+            logger.info(f"Full route stations count: {len(full_route)}")
+
+            return full_route
+        except Exception as e:
+            logger.error(f"Error in get_full_route: {e}")
+            raise
+
+    def serialize_station(self, station):
+        return {
+            'id': station.id,
+            'name': station.name,
+            'line': {
+                'id': station.line.id,
+                'name': station.line.name,
+                'color': station.line.color,
+            },
+            'transport_type': station.transport_type.name,
+            'order': station.order,
+            'latitude': station.latitude,
+            'longitude': station.longitude,
+        }
+
+    def create(self, request, *args, **kwargs):
+        """
+        Override create to dynamically create a route based on userStation and destinationStation
+        """
+        import logging
+        logger = logging.getLogger(__name__)
+        data = request.data
+        user_station_id = data.get('user_station_id')
+        destination_station_id = data.get('destination_station_id')
+        event_id = data.get('event_id')
+        user_station_name = data.get('user_station_name')  # New field for station name
+
+        logger.info(f"Create route request data: user_station_id={user_station_id}, destination_station_id={destination_station_id}, event_id={event_id}, user_station_name={user_station_name}")
+
+        if not destination_station_id or not event_id:
+            logger.error("Missing required fields in create route request")
+            return Response({"error": "Missing required fields."}, status=400)
+
+        try:
+            from .models import Station, Event, Route
+
+            # Fetch user station by ID or name
+            if user_station_id:
+                user_station = Station.objects.get(id=user_station_id)
+            elif user_station_name:
+                user_station = Station.objects.filter(name=user_station_name).first()
+                if not user_station:
+                    logger.error("User station not found by name.")
+                    return Response({"error": "User station not found by name."}, status=404)
+            else:
+                logger.error("User station information missing.")
+                return Response({"error": "User station information missing."}, status=400)
+
+            destination_station = Station.objects.get(id=destination_station_id)
+            event = Event.objects.get(id=event_id)
+
+            logger.info(f"Fetched user_station: {user_station}, destination_station: {destination_station}, event: {event}")
+
+            # Create a temporary Route object (not saved to DB)
+            temp_route = Route(
+                start_station=user_station,
+                end_station=destination_station,
+                event=event,
+                transport_type=user_station.transport_type.name  # or other logic
+            )
+
+            full_route = self.get_full_route(temp_route)
+            serializer = self.get_serializer(temp_route)
+            data = serializer.data
+            data['full_route'] = full_route
+            return Response(data)
+        except Station.DoesNotExist:
+            logger.error("Station not found.")
+            return Response({"error": "Station not found."}, status=404)
+        except Event.DoesNotExist:
+            logger.error("Event not found.")
+            return Response({"error": "Event not found."}, status=404)
+        except Exception as e:
+            logger.error(f"Error in create route: {e}")
+            return Response({"error": str(e)}, status=500)
 
 class NearestStationView(APIView):
     permission_classes = [AllowAny]
@@ -231,3 +425,26 @@ class WalkingRouteView(APIView):
             logger.error(f"Error generating walking route: {e}\n{traceback.format_exc()}")
             return Response({"error": "Error generating walking route"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
+
+from rest_framework.decorators import api_view
+@api_view(['GET'])
+def get_station_by_name(request):
+    name = request.query_params.get("name")
+    if not name:
+        logging.error("Station name parameter is missing.")
+        return Response({"error": "Missing station name"}, status=400)
+
+    try:
+        station = Station.objects.filter(name__iexact=name).first()
+        if station:
+            return Response({
+                "id": station.id,
+                "name": station.name,
+                "line": station.line.name,
+                "transport_type": station.transport_type.name
+            })
+        logging.warning(f"Station not found for name: {name}")
+        return Response({"error": "Station not found"}, status=404)
+    except Exception as e:
+        logging.error(f"Error fetching station by name: {e}")
+        return Response({"error": "Internal server error"}, status=500)

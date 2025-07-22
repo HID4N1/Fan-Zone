@@ -76,9 +76,9 @@ const TransportSelection = () => {
             className={`transport-card${index === 0 ? ' bold' : ''}`}
             onClick={() => {
               console.log('Station clicked:', station);
-              navigate('/walking-route', 
+                navigate('/walking-route', 
                 { state: {
-                   station, userLocation, eventId } });
+                   station, userLocation, eventId, userStation: station } });
             }}
             role="button"
             tabIndex={0}
@@ -91,6 +91,7 @@ const TransportSelection = () => {
             }}
           >
             {index === 0 && <div className="recommended-badge">Recommended</div>}
+            {/* <img src="#" alt="transport type image" /> */}
             <h3>{transportType}</h3>
             <p>Station: {station.station_name}</p>
             <p>Line: {station.line_name}</p>

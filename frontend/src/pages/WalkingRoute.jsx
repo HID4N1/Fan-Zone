@@ -26,6 +26,61 @@ const WalkingRoute = () => {
   const eventId = state?.eventId ?? null;
 
   const [userLocation, setUserLocation] = useState(state?.userLocation ?? null);
+  const [userStation, setUserStation] = useState(() => {
+    const us = state?.userStation ?? null;
+    return us && !us.id && us.station_name
+      ? { ...us, id: null } // placeholder, triggers useEffect
+      : us;
+  });
+
+  // Fetch station id by station_name and line_name if id is missing
+  useEffect(() => {
+    const fetchStationId = async () => {
+      if (userStation && !userStation.id && userStation.station_name) {
+        try {
+          console.log("Fetching station id for:", userStation.station_name);
+          const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/stations/?search=${encodeURIComponent(userStation.station_name)}`
+          );
+
+          if (!response.ok) {
+            console.error(`Failed to fetch station data. Status: ${response.status}`);
+            return;
+          }
+
+          const data = await response.json();
+          console.log("Station search response data:", data);
+
+          if (data && data.length > 0) {
+            console.log("Inspecting station data for line matching:", data);
+
+            // Correctly access line_name for comparison
+            const matchedStation = data.find(
+              (station) => station.line_name && station.line_name.toLowerCase() === userStation.line_name.toLowerCase()
+            );
+
+            console.log("Matched station:", matchedStation);
+
+            if (matchedStation) {
+              setUserStation((prev) => ({ ...prev, id: matchedStation.id }));
+            } else {
+              console.error("No station matched the line name:", userStation.line_name);
+            }
+          } else {
+            console.error("No stations found for the search query:", userStation.station_name);
+          }
+        } catch (error) {
+          console.error("Error fetching station id:", error);
+        }
+      }
+    };
+    fetchStationId();
+  }, [userStation]);
+
+  // Debug log to check userStation content
+  useEffect(() => {
+    console.log("WalkingRoute userStation:", userStation);
+  }, [userStation]);
   const [locationError, setLocationError] = useState(null);
   const [mapHtml, setMapHtml] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -127,6 +182,10 @@ const WalkingRoute = () => {
             lng: userLng,
           },
           eventId,
+          userStation: {
+            station_name: userStation.station_name,
+            line_name: userStation.line_name,
+          },
         },
       });
   };
