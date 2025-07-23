@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import fetchRouteData from "../components/fetchRouteData";
 import api from "../services/api";
 import "./TransportRoute.css";
 import UserCurrentStation from "../components/userCurrentStation";
@@ -10,7 +9,13 @@ const TransportRoute = () => {
     document.title = "CFW | Transport Route";
   }, []);
   const location = useLocation();
-  const eventId = location.state?.eventId ?? null;
+  console.log("TransportRoute location.state:", location.state);
+  const queryParams = new URLSearchParams(location.search);
+  const eventIdFromUrl = queryParams.get('eventId');
+  const fanzoneIdFromUrl = queryParams.get('fanzoneId');
+
+  const eventId = location.state?.eventId ?? eventIdFromUrl ?? null;
+  const fanzoneId = location.state?.fanzoneId ?? fanzoneIdFromUrl ?? null;
   const userStationFromPrev = location.state?.userStation ?? null;
 
   const [eventDetails, setEventDetails] = useState(null);
@@ -42,8 +47,8 @@ const [routeError, setRouteError] = useState(null);
 
   useEffect(() => {
     const fetchRoute = async () => {
-      if (!userStation || !destinationStation || !eventId) {
-        setRouteError("Missing user station, destination station, or event ID.");
+      if (!userStation || !destinationStation || (!eventId && !fanzoneId)) {
+        setRouteError("Missing user station, destination station, or event ID/Fanzone ID.");
         return;
       }
 
@@ -56,7 +61,7 @@ const [routeError, setRouteError] = useState(null);
           user_station_id: userStation.id,           // If you don't have id, use user_station_name
           user_station_name: userStation.station_name,
           destination_station_id: destinationStation.id,
-          event_id: eventId,
+          event_id: eventId || fanzoneId,
         });
 
         setRouteData(response.data.full_route); // assuming full_route is returned
@@ -69,51 +74,78 @@ const [routeError, setRouteError] = useState(null);
     };
 
     fetchRoute();
-  }, [userStation, destinationStation, eventId]);
+  }, [userStation, destinationStation, eventId, fanzoneId]);
 
 
   // Fetch event details by eventId (knakhdo mnha nearst fanzone station)
   useEffect(() => {
-    if (!eventId) {
-      console.error("Event ID is missing.");
-      setError("Event ID is missing.");
+    console.log("TransportRoute useEffect eventId:", eventId, "fanzoneId:", fanzoneId);
+    if (!eventId && !fanzoneId) {
+      console.error("Event ID or Fanzone ID is missing.");
+      setError("Event ID or Fanzone ID is missing.");
       setLoading(false);
       return;
     }
 
-    const fetchEventDetails = async () => {
+    const fetchEventOrFanzoneDetails = async () => {
       try {
-        console.log(`Fetching event details for event ID: ${eventId}`);
-        const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/public-events/${eventId}/`
-        );
+        if (eventId) {
+          console.log(`Fetching event details for event ID: ${eventId}`);
+          const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/public-events/${eventId}/`
+          );
 
-        if (!response.ok) {
-          console.error(`Failed to fetch event details. Status: ${response.status}`);
-          const errorText = await response.text();
-          console.error(`Error response: ${errorText}`);
-          setError("Failed to fetch event details.");
-          setLoading(false);
-          return;
-        }
+          if (!response.ok) {
+            console.error(`Failed to fetch event details. Status: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Error response: ${errorText}`);
+            setError("Failed to fetch event details.");
+            setLoading(false);
+            return;
+          }
 
-        const data = await response.json();
-        console.log("Fetched event details:", data);
+          const data = await response.json();
+          console.log("Fetched event details:", data);
 
-        setEventDetails(data);
-        if (data.fanzone && data.fanzone.Nearest_Fanzone_station) {
-          setDestinationStation(data.fanzone.Nearest_Fanzone_station);
+          setEventDetails(data);
+          if (data.fanzone && data.fanzone.Nearest_Fanzone_station) {
+            setDestinationStation(data.fanzone.Nearest_Fanzone_station);
+          }
+        } else if (fanzoneId) {
+          console.log(`Fetching fanzone details for fanzone ID: ${fanzoneId}`);
+          const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/public-fanzones/${fanzoneId}/`
+          );
+
+          if (!response.ok) {
+            console.error(`Failed to fetch fanzone details. Status: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Error response: ${errorText}`);
+            setError("Failed to fetch fanzone details.");
+            setLoading(false);
+            return;
+          }
+
+          const data = await response.json();
+          console.log("Fetched fanzone details:", data);
+
+          setEventDetails(null);
+          if (data.Nearest_Fanzone_station) {
+            setDestinationStation(data.Nearest_Fanzone_station);
+          } else {
+            setDestinationStation(null);
+          }
         }
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching event details:", error);
-        setError("Error fetching event details.");
+        console.error("Error fetching event or fanzone details:", error);
+        setError("Error fetching event or fanzone details.");
         setLoading(false);
       }
     };
 
-    fetchEventDetails();
-  }, [eventId]);
+    fetchEventOrFanzoneDetails();
+  }, [eventId, fanzoneId]);
 
   return (
   <div className="transport-route-container">

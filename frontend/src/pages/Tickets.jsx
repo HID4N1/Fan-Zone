@@ -1,79 +1,242 @@
-// TicketOptions.jsx
 import React from "react";
 import "./Tickets.css";
+import TicketCardPremium from "../components/TicketCardPremium";
+
+// SVG icons
+const TramIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="icon-svg"><rect x="3" y="7" width="18" height="10" rx="4" fill="#4F8DFD"/><rect x="7" y="3" width="10" height="4" rx="2" fill="#003366"/><circle cx="7" cy="19" r="2" fill="#003366"/><circle cx="17" cy="19" r="2" fill="#003366"/></svg>
+);
+const BusIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="icon-svg"><rect x="4" y="6" width="16" height="10" rx="4" fill="#FF8C00"/><rect x="7" y="3" width="10" height="4" rx="2" fill="#003366"/><circle cx="7" cy="19" r="2" fill="#003366"/><circle cx="17" cy="19" r="2" fill="#003366"/></svg>
+);
+const StudentIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="icon-svg"><circle cx="12" cy="8" r="4" fill="#4F8DFD"/><rect x="6" y="14" width="12" height="6" rx="3" fill="#003366"/></svg>
+);
+
+// Store Icons
+const AppStoreIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+  </svg>
+);
+
+const GooglePlayIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.61 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+  </svg>
+);
+
+// Légende des icônes
+const iconLegend = [
+  { icon: <TramIcon />, label: 'Tram', color: '#4F8DFD' },
+  { icon: <BusIcon />, label: 'Bus', color: '#FF8C00' }
+];
+
+// Ticket data
+const unitaryTicket = {
+  title: "Tram Ticket",
+  price: "8 dhs",
+  icon: <><TramIcon /></>,
+  details: [
+    "Access to tram network",
+    "1 trip ticket = 8 dhs / 2 trips ticket = 14 dhs (save 2 dhs)"
+  ],
+  color: '#FF8C00',
+  badge: 'Tram',
+  isUnitary: true,
+  image: '/assets/images/tramway_1.jpg',
+  description: 'Travel easily across the city with the tramway.'
+};
+
+const subscriptions = [
+  {
+    title: "Bus Pass",
+    price: "60 dhs/week",
+    icon: <><BusIcon /></>,
+    details: [
+      "Save 30% compared to full fare (based on 12 trips per week)",
+      "Unlimited travel on the entire Casabusway network",
+      "Valid for 1 week from the first validation"
+    ],
+    color: '#FF8C00',
+    badge: 'Bus',
+    image: '/assets/images/busway_1.jpeg',
+    description: 'Your best option for daily bus commutes.'
+  },
+  {
+    title: "Monthly Pass",
+    price: "230 dhs/month",
+    icon: <><TramIcon /> <BusIcon /></>,
+    details: [
+      "Save 30% compared to full fare (based on 48 trips per month)",
+      "Unlimited travel on the entire Casatramway + Casabusway network",
+      "Valid for 30 days from the first validation"
+    ],
+    color: '#FF8C00',
+    badge: 'Monthly'
+  }
+];
 
 const Tickets = () => {
-  React.useEffect(() => {
-    document.title = "CFW | Tickets";
-  }, []);
   return (
-    <div className="ticket-page">
-      <section className="single-ticket">
-        <div className="ticket-card">
-          <h3>Ticket Unitaire</h3>
-          <p>Donne accès aux : <span role="img" aria-label="tram">🚊</span> <span role="img" aria-label="bus">🚌</span></p>
-          <p>Ticket pour 1 voyage = 8 dhs / Ticket pour 2 voyages = 14 dhs (j'économise 2dhs)</p>
-          <p className="price">8 dhs</p>
-          <button>Découvrir ce titre &rarr;</button>
-        </div>
-      </section>
-
-      <section className="regular-travel">
-        <h2>Voyages réguliers</h2>
-        <p className="subtitle">Voyagez en toute liberté avec notre carte rechargeable et nos cartes d'abonnement.</p>
-        <div className="card-grid">
-          {cards.map((card, idx) => (
-            <div key={idx} className="card">
-              <h4>{card.title}</h4>
-              <p>Donne accès aux : <span role="img" aria-label="tram">🚊</span> <span role="img" aria-label="bus">🚌</span></p>
-              <ul>
-                {card.details.map((item, i) => <li key={i}>{item}</li>)}
-              </ul>
-              <p className="price-highlight">{card.price}</p>
-              <button>Découvrir ce titre &rarr;</button>
+    <div className="ticket-page modern-bg">
+      <h1 className="main-title">Tickets & Passes</h1>
+      {/* Légende des icônes supprimée */}
+      {/* Les trois cartes alignées en haut */}
+      <div className="ticket-cards-row">
+        <TicketCardPremium {...unitaryTicket} />
+        {subscriptions.map((card, idx) => (
+          <TicketCardPremium key={idx} {...card} />
+        ))}
+      </div>
+      
+      {/* Section Casatramway App Promotion */}
+      <section className="casatramway-app-section">
+        <div className="app-promotion-container">
+          {/* Left side - Smartphones */}
+          <div className="smartphones-container">
+            <div className="phone phone-left">
+              <div className="phone-screen">
+                <div className="phone-header">
+                  <span className="phone-time">14:18</span>
+                  <span className="phone-signal">4G</span>
+                </div>
+                <div className="app-content">
+                  <h3 className="app-title">Horaires</h3>
+                  <div className="app-tabs">
+                    <span className="tab">Favoris</span>
+                    <span className="tab active">Lignes</span>
+                    <span className="tab">Arrêts</span>
+                  </div>
+                  <div className="search-bar">
+                    <span>🔍 Rechercher</span>
+                  </div>
+                  <div className="transport-lines">
+                    <div className="line-item">
+                      <div className="line-icon orange"></div>
+                      <div className="line-info">
+                        <span className="line-name">T1 Sidi Moumen-Lissasfa</span>
+                        <span className="line-network">Casatramway</span>
+                      </div>
+                    </div>
+                    <div className="line-item">
+                      <div className="line-icon yellow"></div>
+                      <div className="line-info">
+                        <span className="line-name">T2 Bernoussi-Ain Diab</span>
+                        <span className="line-network">Casatramway</span>
+                      </div>
+                    </div>
+                    <div className="line-item">
+                      <div className="line-icon red"></div>
+                      <div className="line-info">
+                        <span className="line-name">T3 Casa Port-Hay Al Wahda</span>
+                        <span className="line-network">Casatramway</span>
+                      </div>
+                    </div>
+                    <div className="line-item">
+                      <div className="line-icon blue"></div>
+                      <div className="line-info">
+                        <span className="line-name">T4 Parc de la ligue arabe-Mohammed Erradi</span>
+                        <span className="line-network">Casatramway</span>
+                      </div>
+                    </div>
+                    <div className="line-item">
+                      <div className="line-icon green"></div>
+                      <div className="line-info">
+                        <span className="line-name">BW1 Omar AL Khayam-Salmia 2</span>
+                        <span className="line-network">Casabusway</span>
+                      </div>
+                    </div>
+                    <div className="line-item">
+                      <div className="line-icon green"></div>
+                      <div className="line-info">
+                        <span className="line-name">BW2 Ouled Azzouz-Oulmes</span>
+                        <span className="line-network">Casabusway</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="app-nav">
+                    <span className="nav-item">🏠 Accueil</span>
+                    <span className="nav-item active">⏰ Horaires</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          ))}
+            
+            <div className="phone phone-right">
+              <div className="phone-screen">
+                <div className="phone-header">
+                  <span className="phone-time">14:17</span>
+                  <span className="phone-signal">4G</span>
+                </div>
+                <div className="map-content">
+                  <div className="map-streets">
+                    <div className="street">BOULEVARD AHMED SEBBAH</div>
+                    <div className="street">BOULEVARD DE LA CROIX</div>
+                    <div className="street">BOULEVARD EL FIDA</div>
+                  </div>
+                  <div className="map-points">
+                    <div className="point">🚌 Gare Routiere Oulad Ziane</div>
+                    <div className="point">🏥 مستشفى الدكتور عبد الرحيم الهاروشي</div>
+                  </div>
+                  <div className="map-search">
+                    <span>العثور على مسار رحلة</span>
+                    <button className="map-btn">هيا بنا ؟</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right side - App Info */}
+          <div className="app-info">
+            <h2 className="app-main-title">
+              L'Application mobile Casatramway : tout Casa dans votre poche !
+            </h2>
+            
+            <div className="app-features">
+              <div className="feature-item">
+                <div className="feature-icon">🗺️</div>
+                <span>Planification de votre trajet</span>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">🚇</div>
+                <span>Horaires de passage des tramways et des busways</span>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">📢</div>
+                <span>Information en live sur le trafic</span>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">🛒</div>
+                <span>E-boutique (en cours)</span>
+              </div>
+            </div>
+            
+            <p className="app-description">
+              Téléchargez gratuitement l'application mobile officielle du réseau Casatramway & Casabusway opéré par RATP Dev Casablanca.
+            </p>
+            
+            <div className="download-buttons">
+              <button className="download-btn app-store">
+                <AppStoreIcon />
+                <span>Disponible sur App Store</span>
+              </button>
+              <button className="download-btn google-play">
+                <GooglePlayIcon />
+                <span>DISPONIBLE SUR Google Play</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Traffic Info Bar */}
+        <div className="traffic-info-bar">
+          <span>⚠️ Info trafic</span>
         </div>
       </section>
-
-      <section className="subscription-footer">
-        <button className="cta">Créer un abonnement ?</button>
-        <button className="cta-outline">L'agence la plus proche ?</button>
-      </section>
-
     </div>
   );
 };
-
-const cards = [
-  {
-    title: "Abonnement Hebdomadaire",
-    details: [
-      "J'économise 30% sur le plein tarif (sur base de 12 trajets par semaine)",
-      "Voyage en illimité sur l'ensemble du réseau Casatramway + Casabusway",
-      "Abonnement valable 1 semaine à partir de la 1ère validation"
-    ],
-    price: "60 dhs/semaine (+ 15 dhs pour la carte valable 5 ans)"
-  },
-  {
-    title: "Abonnement Etudiant (< 26 ans) Mensuel",
-    details: [
-      "Réservé exclusivement aux étudiants de moins de 26 ans",
-      "J'économise 50% sur le plein tarif (sur base de 48 trajets par mois)",
-      "Voyage en illimité sur l'ensemble du réseau Casatramway + Casabusway",
-      "Abonnement valable 30 jours à partir de la 1ère validation"
-    ],
-    price: "150 dhs / mois (+15 dhs pour la carte valable 5 ans)"
-  },
-  {
-    title: "Abonnement Mensuel",
-    details: [
-      "J'économise 30% sur le plein tarif (sur base de 48 trajets par mois)",
-      "Voyage en illimité sur l'ensemble du réseau Casatramway + Casabusway",
-      "Abonnement valable 30 jours à partir de la 1ère validation"
-    ],
-    price: "230 dhs/mois (+ 15 dhs pour la carte valable 5 ans)"
-  }
-];
 
 export default Tickets;

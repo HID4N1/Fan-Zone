@@ -35,6 +35,22 @@ class PublicFanZoneListView(generics.ListAPIView):
     serializer_class = FanZoneSerializer
     permission_classes = [AllowAny]
 
+class PublicFanzoneDetailView(generics.RetrieveAPIView):
+    queryset = FanZone.objects.all()
+    serializer_class = FanZoneSerializer
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        fanzone_id = kwargs.get('pk')
+        try:
+            fanzone = FanZone.objects.get(id=fanzone_id)
+            serializer = self.get_serializer(fanzone)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except FanZone.DoesNotExist:
+            return Response({"error": "Fanzone not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": "Internal server error."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]

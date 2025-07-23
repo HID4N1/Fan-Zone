@@ -20,6 +20,7 @@ import Contact from './pages/contact';
 import About from './pages/About';
 
 import EventDetails from "./pages/EventDetails";
+import FanzoneDetails from "./pages/FanzoneDetails";
 import TransportSelection from './pages/TransportSelection';
 import WalkingRoute from './pages/WalkingRoute';
 import TransportRoute from './pages/TransportRoute';
@@ -44,6 +45,7 @@ function App() {
             <Route path="/About" element={<About />} />
 
             <Route path="/event/:eventId" element={<EventDetails />} />
+            <Route path="/fanzone/:fanzoneId" element={<FanzoneDetails />} />
             <Route path="/transport-selection" element={<TransportSelection />} />
             <Route path="/walking-route" element={<WalkingRoute />} />
             <Route path="/transport-route" element={<TransportRoute />} />

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FanzoneCard from "../components/FanzoneCard";
 import "./Fanzones.css";
 
 const Fanzones = () => {
+    const navigate = useNavigate();
+
     useEffect(() => {
         document.title = "CFW | Fanzones";
       }, []);
@@ -37,6 +40,10 @@ const Fanzones = () => {
         return <div className="fanzones-page"><p>Error loading fan zones: {error}</p></div>;
     }
 
+    const handleCardClick = (id) => {
+        navigate(`/fanzone/${id}`);
+    };
+
     return (
         <div className="fanzones-page">
             <div className="fanzones-header">
@@ -57,6 +64,7 @@ const Fanzones = () => {
                         capacity={fanzone.capacity}
                         features={fanzone.features}
                         openingHours={fanzone.openingHours}
+                        onClick={() => handleCardClick(fanzone.id)}
                     />
                 ))}
             </div>

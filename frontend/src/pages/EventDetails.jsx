@@ -11,7 +11,7 @@ const EventDetails = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-      document.title = "CFW | ${event-name}";
+      document.title = "CFW | Event Details";
     const fetchEvent = async () => {
       try {
         setLoading(true);

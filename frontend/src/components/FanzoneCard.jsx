@@ -1,9 +1,9 @@
 import * as React from 'react';
 import './FanzoneCard.css';
 
-const FanzoneCard = ({ key, imageUrl, title, description, location, buttonText = "Learn More" }) => {
+const FanzoneCard = ({ key, imageUrl, title, description, location, buttonText = "Learn More", onClick }) => {
     return (
-      <div className="card">
+      <div className="card" onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
         {imageUrl && <img src={imageUrl} alt={title} className="card-image" />}
         <div className="card-content">
           <h3 className="card-title">{title}</h3>

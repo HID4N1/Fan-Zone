@@ -27,6 +27,8 @@ const WalkingRoute = () => {
   const navigate = useNavigate();
   const { state } = location;
   const eventId = state?.eventId ?? null;
+  const fanzoneId = state?.fanzoneId ?? null;
+  const fanzoneLocation = state?.fanzoneLocation ?? null;
 
   const [userLocation, setUserLocation] = useState(state?.userLocation ?? null);
   const [userStation, setUserStation] = useState(() => {
@@ -103,8 +105,8 @@ const WalkingRoute = () => {
     if (
       userLat === null ||
       userLng === null ||
-      stationLat === null ||
-      stationLng === null
+      (stationLat === null && !fanzoneLocation) ||
+      (stationLng === null && !fanzoneLocation)
     ) {
       return;
     }
@@ -115,7 +117,9 @@ const WalkingRoute = () => {
         `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/walking-route/`,
         {
           user_location: [userLng, userLat],
-          station_location: [stationLng, stationLat],
+          station_location: fanzoneLocation
+            ? [fanzoneLocation.lng, fanzoneLocation.lat]
+            : [stationLng, stationLat],
         }
       );
 
@@ -136,7 +140,7 @@ const WalkingRoute = () => {
 
   useEffect(() => {
     fetchRoute();
-  }, [userLat, userLng, stationLat, stationLng]);
+  }, [userLat, userLng, stationLat, stationLng, fanzoneLocation]);
 
   // Helper function to calculate distance between two lat/lng points in meters
   const getDistanceMeters = (lat1, lng1, lat2, lng2) => {
@@ -176,21 +180,28 @@ const WalkingRoute = () => {
   }, [userLat, userLng, stationLat, stationLng, arrivalConfirmed]);
 
   const handleConfirmArrival = () => {
+    console.log("handleConfirmArrival eventId:", eventId, "fanzoneId:", fanzoneId);
     setArrivalConfirmed(true);
     setShowArrivalModal(false);
-      navigate('/transport-route', {
-        state: {
-          userLocation: {
-            lat: userLat,
-            lng: userLng,
-          },
-          eventId,
-          userStation: {
-            station_name: userStation.station_name,
-            line_name: userStation.line_name,
-          },
+    const searchParams = new URLSearchParams();
+    if (eventId) searchParams.append('eventId', eventId);
+    if (fanzoneId) searchParams.append('fanzoneId', fanzoneId);
+    const url = `/transport-route?${searchParams.toString()}`;
+    console.log("Navigating to:", url);
+    navigate(url, {
+      state: {
+        userLocation: {
+          lat: userLat,
+          lng: userLng,
         },
-      });
+        eventId,
+        fanzoneId,
+        userStation: {
+          station_name: userStation.station_name,
+          line_name: userStation.line_name,
+        },
+      },
+    });
   };
 
   const handleCancelArrival = () => {
