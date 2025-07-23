@@ -20,7 +20,7 @@
   }
   
 .logo img{
-    width: 240px;
+    width: 80px;
     height: 80px;
 }
   
@@ -122,6 +122,11 @@
 /* Responsive styles for phone mode */
 @media (max-width: 768px) {
   
+  .logo img {
+      width: 80px; /* Adjust logo size for smaller screens */
+      height: 80px;
+      left: 0;
+    }
 
     .logo-desc {
       text-align: center; /* Center-align logo and description */

@@ -3,8 +3,12 @@ import { useLocation } from "react-router-dom";
 import fetchRouteData from "../components/fetchRouteData";
 import api from "../services/api";
 import "./TransportRoute.css";
+import UserCurrentStation from "../components/userCurrentStation";
 
 const TransportRoute = () => {
+  useEffect(() => {
+    document.title = "CFW | Transport Route";
+  }, []);
   const location = useLocation();
   const eventId = location.state?.eventId ?? null;
   const userStationFromPrev = location.state?.userStation ?? null;
@@ -112,50 +116,110 @@ const [routeError, setRouteError] = useState(null);
   }, [eventId]);
 
   return (
-    <div className="transport-route-container">
-  <h1>Transport Route</h1>
-  {eventDetails && <p>Event Name: {eventDetails.name}</p>}
+  <div className="transport-route-container">
+
+    <div className="image-overlay-container">
+        <img
+          src="../assets/images/tramway_2.jpeg"
+          alt="Transport Route Banner"
+          className="banner-image"
+        />
+        <div className="overlay">
+        <h1 className="overlay-text">Transport Route</h1>
+    </div>
+  
+  </div>
+  
 
   {loading && <p>Loading event details...</p>}
   {error && <p className="error-text">{error}</p>}
 
   {!loading && !error && (
     <>
+      {/* stations (depart-arrivee) */}
       <div className="section">
-        <h2>User's Station (Current Location)</h2>
-        {userStation ? (
-          <p>
-            {userStation.station_name} (Line: {userStation.line_name})
-          </p>
-        ) : (
-          <p>No station found near your location.</p>
-        )}
-      </div>
 
-      <div className="section">
-        <h2>User's Station Destination (Nearest Fanzone Station)</h2>
-        {destinationStation ? (
-          <p>
-            {destinationStation.name} (Line: {destinationStation.line_name})
-          </p>
-        ) : (
-          <p>No destination station found for this event.</p>
-        )}
-      </div>
+      <div className="departure-station">
+            <h2>
+              <span className="station-icon"></span>
+              Departure Station
+            </h2>
+            {userStation ? (
+              <div className="station-info">
+                <p className="station-name">
+                  <strong>{userStation.station_name}</strong>
+                </p>
+                <p className="station-line">
+                  Line: <span>{userStation.line_name}</span>
+                </p>
+              </div>
+            ) : (
+              <p className="station-not-found">
+                <i className="icon-warning"></i> No station found near your location
+              </p>
+            )}
+        </div>
 
-      <div className="section">
-        <h2>Computed Route</h2>
-        {routeData ? (
-          <ul className="route-list">
-            {routeData.map((station) => (
-              <li key={station.id}>
-                {station.name} — ({station.line.name})
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Route not available yet.</p>
-        )}
+
+        <div className="destination-station">
+            <h2>
+              <span className="station-icon"></span>
+              Destination Station
+            </h2>
+            {destinationStation ? (
+              <div className="station-info ">
+                <p className="station-name">
+                  <strong>{destinationStation.name}</strong>
+                </p>
+                <p className="station-line">
+                  Line: <span>{destinationStation.line_name}</span>
+                </p>
+              </div>
+            ) : (
+              <p className="station-not-found">
+                <i className="icon-warning"></i> No destination station found for this event
+              </p>
+            )}
+        </div>
+
+      </div>
+      {/* route */}
+      <div className="section-1">
+
+       <div className="live-tracking">
+
+        {routeData && routeData.length > 0 && (
+            <UserCurrentStation
+              routeData={routeData}
+              onArrival={(station) => {
+                console.log("User arrived at:", station.name);
+              }}
+            />
+          )}
+       </div>
+
+       
+       
+       {/* <div className="full-route">
+          {routeData ? (
+            <ul className="route-list">
+              {routeData.map((station, index) => (
+                <li
+                  key={`${station.id}-${index}`}
+                  className="route-item"
+                  style={{ backgroundColor: station.line.color }}
+                >
+                  {station.name} — ({station.line.name})
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Route not available yet.</p>
+          )}
+        </div> */}
+
+
+
       </div>
     </>
   )}

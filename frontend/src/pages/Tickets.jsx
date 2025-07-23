@@ -3,6 +3,9 @@ import React from "react";
 import "./Tickets.css";
 
 const Tickets = () => {
+  React.useEffect(() => {
+    document.title = "CFW | Tickets";
+  }, []);
   return (
     <div className="ticket-page">
       <section className="single-ticket">

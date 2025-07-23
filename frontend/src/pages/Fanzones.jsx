@@ -3,6 +3,9 @@ import FanzoneCard from "../components/FanzoneCard";
 import "./Fanzones.css";
 
 const Fanzones = () => {
+    useEffect(() => {
+        document.title = "CFW | Fanzones";
+      }, []);
     const [fanzones, setFanzones] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

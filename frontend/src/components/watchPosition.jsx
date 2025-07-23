@@ -9,7 +9,7 @@ const WatchPosition = ({ onLocationDetected, onError }) => {
 
     const watchId = navigator.geolocation.watchPosition(
       pos => {
-        console.log('WatchPosition: position updated', pos);
+        // console.log('WatchPosition: position updated', pos);
         const { latitude, longitude } = pos.coords;
         onLocationDetected({ lat: latitude, lng: longitude });
       },

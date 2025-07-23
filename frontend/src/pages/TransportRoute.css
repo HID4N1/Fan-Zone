@@ -1,26 +1,285 @@
 /* TransportRoute.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
 .transport-route-container {
-    padding: 16px;
-    max-width: 800px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
+    max-width: 100%;
     line-height: 1.6;
     min-height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    background: #fafafa;
+    padding: 1rem 1.5rem;
+  }
+  .image-overlay-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .banner-image {
+    width: 100%;
+    height: 300px;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .banner-image:hover {
+    transform: scale(1.05);
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(251, 163, 0, 0.6), rgba(255, 140, 0, 0.6));
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  .overlay-text {
+    color: white;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    user-select: none;
   }
   
   .section {
-    margin-bottom: 24px;
-    background-color: #ffffff;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
-  .route-list {
-    padding-left: 20px;
-    list-style-type: none;
+  
+  .departure-station, 
+  .destination-station {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-left: 6px solid;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1 0 45%;
+    min-width: 280px;
+    cursor: pointer;
+  }
+  
+  .departure-station:hover, 
+  .destination-station:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Different border colors for each card */
+  .departure-station {
+    border-left-color: #007bff; /* Blue accent for departure */
+  }
+  
+  .destination-station {
+    border-left-color: #28a745; /* Green accent for destination */
+  }
+  
+  /* Card headings */
+  .departure-station h2,
+  .destination-station h2 {
+    font-size: 1.2rem;
+    color: #343a40;
+    margin: 0 0 0.75rem 0;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Station information */
+  .departure-station p,
+  .destination-station p {
+    font-size: 1.05rem;
+    color: #212529;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+  }
+  
+  /* Not found message styling */
+  .departure-station p:last-child,
+  .destination-station p:last-child {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .stations-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .departure-station,
+    .destination-station {
+      min-width: 100%;
+      padding: 1.2rem 1.5rem;
+    }
+    
+    .departure-station h2,
+    .destination-station h2 {
+      font-size: 1.1rem;
+    }
+    
+    .departure-station p,
+    .destination-station p {
+      font-size: 1rem;
+    }
+  }
+  /* Small phone adjustments */
+  @media (max-width: 480px) {
+    .stations-container {
+      flex-direction: column;
+      gap: 1.2rem;
+      padding: 0 0.5rem;
+    }
+    
+    .departure-station,
+    .destination-station {
+      padding: 1.2rem 1.5rem;
+      min-width: 100%;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      border-left-width: 8px;
+    }
+    
+    .departure-station h2,
+    .destination-station h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .departure-station p,
+    .destination-station p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+  @media (max-width: 600px) {
+    .stations-container {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 0 0.75rem;
+    }
+    
+    .departure-station,
+    .destination-station {
+      padding: 1.3rem 1.6rem;
+      min-width: 100%;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+      border-left-width: 8px;
+    }
+    
+    .departure-station h2,
+    .destination-station h2 {
+      font-size: 1.15rem;
+      margin-bottom: 0.85rem;
+    }
+    
+    .departure-station p,
+    .destination-station p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .section {
+      overflow-x: visible; /* Remove horizontal scroll */
+    }
+    .departure-station,
+    .destination-station {
+      flex: 1 1 50%;
+      min-width: auto; /* Remove min-width to allow shrinking */
+      margin-bottom: 0; /* Remove bottom margin to align side by side */
+    }
+  }
+  @media (max-width: 300px) {
+    .stations-container {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    
+    .departure-station h2,
+    .destination-station h2 {
+      font-size: 1rem;
+    }
+  }
+  
+  .user-current-station {
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+      flex: 1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+      cursor: default;
+  }
+  
+  .user-current-station:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  
+  .current-station{
+    font-weight: 900;
+    font-size: 30px;
+    letter-spacing: 1px;
+    color: #212529;
+  }
+  .in-transit {
+    position: relative;
+    font-weight: 800;
+    font-size: 30px;
+    color: #007bff;
+    overflow: hidden;
+    padding-bottom: 8px;
+  }
+  
+  .in-transit::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(to right, #007bff 0%, #66b2ff 50%, #007bff 100%);
+    animation: loading-bar 2s infinite ease-in-out;
+    background-size: 200% auto;
+  }
+  
+  @keyframes loading-bar {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
   }
   
   .error-text {
@@ -31,11 +290,134 @@
   /* Responsive design for small screens */
   @media (max-width: 600px) {
     .transport-route-container {
-      padding: 12px;
+      margin: 0;
+      padding: 0.5rem 1rem;
     }
   
     h1, h2 {
       font-size: 1.25rem;
     }
+    .transport-route-container img {
+      height: 200px;
+    }
   }
   
+  /* Responsive design for larger screens */
+  @media (max-width: 500px) {
+      .transport-route-container {
+        margin: 0 auto;
+      }
+    
+      h1, h2 {
+        font-size: 1.5rem;
+      }
+    
+      .transport-route-container img {
+        height: 200px;
+      }
+    }
+  
+    @media (max-width: 300px) {
+      .transport-route-container {
+        margin: 0 auto;
+      }
+    
+      h1, h2 {
+        font-size: 1.5rem;
+      }
+    
+      .transport-route-container img {
+        height: 200px;
+      }
+    }
+  
+    .section-1{
+      gap: 1rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .live-tracking {
+      display: flex;
+      margin-top: 2rem;
+      justify-content: flex-start ;
+      padding-left: 1rem;
+      border-left: 4px solid #007bff;
+      background: #e9f2ff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: box-shadow 0.3s ease;
+    }
+    .live-tracking:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .live-tracking li {
+      list-style: none;
+      margin: 0 1rem;
+      color: #333;
+    }
+  
+    .next-stations-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .next-station-item {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .next-station-item:hover {
+      background-color: #e0e7ff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  
+    .station-text {
+      flex: 1;
+      font-size: 1rem;
+      color: #212529;
+      letter-spacing: 0.2px;
+    }
+  
+    .line-info {
+      color: #666;
+      font-size: 0.9rem;
+    }
+  
+    .line-bar {
+      width: 12px;
+      height: 100%;
+      border-radius: 6px;
+      margin-left: 16px;
+      z-index: 1000;
+    }
+
+  
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInSlide 0.5s ease-out forwards;
+    }
+    
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    

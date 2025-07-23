@@ -20,6 +20,9 @@ MapDisplay.propTypes = {
 };
 
 const WalkingRoute = () => {
+  useEffect(() => {
+    document.title = 'CFW | Walking Route';
+  }, []);
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;

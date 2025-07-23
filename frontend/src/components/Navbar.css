@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0px;
+  padding: 10px 0px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: 'Montserrat', sans-serif;
@@ -16,16 +16,13 @@
   font-weight: 500;
 }
 
-.navbar-logo {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-}
+
 .navbar-logo img {
-  margin-left: 15px;
+  margin-left: 20px;
+  margin-bottom: 0;
   text-decoration: none;
-  width: 120px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   display: inline-block;
 }
 
@@ -73,9 +70,7 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .navbar-logo {
-    margin-bottom: 10px;
-  }
+
 
   .navbar-toggle {
     font-size: 24px;

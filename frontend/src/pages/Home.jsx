@@ -8,6 +8,9 @@ import QRCodeScanner from '../components/QRCodeScanner';
 const backgroundImage = process.env.PUBLIC_URL + '/assets/images/Fanzone_1.jpg';
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "CFW | Home";
+  }, []);
   const [activeTab, setActiveTab] = useState('scan');
   const [showScanner, setShowScanner] = useState(false);
   const [scanResult, setScanResult] = useState('');

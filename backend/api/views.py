@@ -122,10 +122,12 @@ class RouteViewSet(viewsets.ModelViewSet):
         """
         Compute the full route between start_station and end_station,
         including stations with their lines, handling combinations of lines
-        of same or different transport types.
+        of same or different transport types, supporting multiple transfers.
         """
+        import heapq
+        import collections
         logger = logging.getLogger(__name__)
-        from api.models import TransfertStation
+        from api.models import TransfertStation, Station
 
         try:
             start_station = route.start_station
@@ -149,58 +151,66 @@ class RouteViewSet(viewsets.ModelViewSet):
                 logger.info(f"Direct route stations count: {len(stations)}")
                 return [self.serialize_station(s) for s in stations]
 
-            # If different lines or transport types, find a combined route using TransfertStation model
-            from django.db import models
-            transfer_stations = TransfertStation.objects.filter(
-                models.Q(station_1__line=start_station.line, station_2__line=end_station.line) |
-                models.Q(station_2__line=start_station.line, station_1__line=end_station.line)
-            )
+            # Build graph of stations connected by edges (adjacent stations and transfer stations)
+            graph = collections.defaultdict(list)  # key: station_id, value: list of (neighbor_station_id, weight)
 
-            logger.info(f"Found {transfer_stations.count()} transfer stations")
+            # Add edges between adjacent stations on the same line
+            stations = Station.objects.select_related('line').all()
+            stations_by_line = collections.defaultdict(list)
+            for station in stations:
+                stations_by_line[station.line_id].append(station)
+            for line_id, line_stations in stations_by_line.items():
+                # Sort stations by order
+                line_stations.sort(key=lambda s: s.order)
+                for i in range(len(line_stations) - 1):
+                    s1 = line_stations[i]
+                    s2 = line_stations[i + 1]
+                    # Weight can be distance or 1 for simplicity
+                    graph[s1.id].append((s2.id, 1))
+                    graph[s2.id].append((s1.id, 1))
 
-            if not transfer_stations.exists():
-                # No transfer station found, return start and end stations only
-                logger.warning("No transfer stations found between lines")
+            # Add edges for transfer stations (connections between lines)
+            all_transfers = TransfertStation.objects.all()
+            for transfer in all_transfers:
+                s1 = transfer.station_1
+                s2 = transfer.station_2
+                # Weight for transfer can be higher to discourage transfers or 1 for equal weight
+                graph[s1.id].append((s2.id, 1))
+                graph[s2.id].append((s1.id, 1))
+
+            # Dijkstra's algorithm to find shortest path from start_station to end_station
+            def dijkstra(start_id, end_id):
+                queue = [(0, start_id, [])]  # (cost, current_station_id, path)
+                visited = set()
+                while queue:
+                    cost, current, path = heapq.heappop(queue)
+                    if current in visited:
+                        continue
+                    visited.add(current)
+                    path = path + [current]
+                    if current == end_id:
+                        return path
+                    for neighbor, weight in graph[current]:
+                        if neighbor not in visited:
+                            heapq.heappush(queue, (cost + weight, neighbor, path))
+                return None
+
+            path_station_ids = dijkstra(start_station.id, end_station.id)
+            if not path_station_ids:
+                logger.warning("No path found between start and end stations")
                 return [self.serialize_station(start_station), self.serialize_station(end_station)]
 
-
-            # Choose the first transfer station for route
-            transfer = transfer_stations.first()
-            logger.info(f"Using transfer station: {transfer}")
-
-            # Determine which station in transfer corresponds to start line and end line
-            if transfer.station_1.line == start_station.line:
-                transfer_start = transfer.station_1
-                transfer_end = transfer.station_2
-            else:
-                transfer_start = transfer.station_2
-                transfer_end = transfer.station_1
-
-            logger.info(f"Transfer start: {transfer_start}, Transfer end: {transfer_end}")
-
-            # Get route from start_station to transfer_start
-            route_part1 = list(start_station.line.stations.filter(
-                order__gte=min(start_station.order, transfer_start.order),
-                order__lte=max(start_station.order, transfer_start.order)
-            ).order_by('order'))
-            if start_station.order > transfer_start.order:
-                route_part1.reverse()
-
-            # Get route from transfer_end to end_station
-            route_part2 = list(end_station.line.stations.filter(
-                order__gte=min(transfer_end.order, end_station.order),
-                order__lte=max(transfer_end.order, end_station.order)
-            ).order_by('order'))
-            if transfer_end.order > end_station.order:
-                route_part2.reverse()
-
-            # Combine routes, avoid duplicate transfer station
-            full_route = [self.serialize_station(s) for s in route_part1]
-            full_route.extend([self.serialize_station(s) for s in route_part2])
+            # Fetch station objects for path
+            stations_map = {station.id: station for station in stations}
+            full_route = [stations_map[station_id] for station_id in path_station_ids]
 
             logger.info(f"Full route stations count: {len(full_route)}")
 
-            return full_route
+            # Serialize stations
+            serialized_route = [self.serialize_station(s) for s in full_route]
+
+            return serialized_route
+
         except Exception as e:
             logger.error(f"Error in get_full_route: {e}")
             raise
@@ -367,7 +377,6 @@ class NearestStationView(APIView):
 
         return Response(nearest_stations, status=status.HTTP_200_OK)
 
-import logging
 import openrouteservice
 import folium
 

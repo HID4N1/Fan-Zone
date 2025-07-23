@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import "./About.css";
 
 const stats = [
@@ -8,7 +9,13 @@ const stats = [
   { label: "Active Users Worldwide", value: "50K+" },
 ];
 
-const About = () => (
+
+const About = () => {
+  useEffect(() => {
+    document.title = "CFW | About";
+  }, []);
+
+return (
   <>
     <section className="about-hero paynext-style">
       <div className="about-hero-content">
@@ -54,5 +61,6 @@ const About = () => (
     <div style={{ minHeight: '60px' }}></div>
   </>
 );
+};
 
 export default About;

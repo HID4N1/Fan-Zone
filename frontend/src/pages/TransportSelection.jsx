@@ -4,6 +4,9 @@ import LocationDetector from '../components/LocationDetector';
 import './TransportSelection.css';
 
 const TransportSelection = () => {
+  useEffect(() => {
+    document.title = 'CFW | Transport Selection';
+  }, []);
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);

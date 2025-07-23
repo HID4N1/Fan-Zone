@@ -23,6 +23,7 @@ import EventDetails from "./pages/EventDetails";
 import TransportSelection from './pages/TransportSelection';
 import WalkingRoute from './pages/WalkingRoute';
 import TransportRoute from './pages/TransportRoute';
+import FanzoneDetect from './pages/FanzoneDetect';
 
 import './App.css';
 
@@ -46,6 +47,8 @@ function App() {
             <Route path="/transport-selection" element={<TransportSelection />} />
             <Route path="/walking-route" element={<WalkingRoute />} />
             <Route path="/transport-route" element={<TransportRoute />} />
+            <Route path="/fanzone-detect" element={<FanzoneDetect />} />
+
           </Route>
 
           {/* Admin login route */}
