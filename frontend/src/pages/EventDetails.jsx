@@ -60,38 +60,32 @@ const EventDetails = () => {
       {/* Highlights Section */}
       <div className="event-highlights">
         <div className="highlight-content">
-          <div className="highlight-title-container">
-            <h2 className="highlight-title">{event.location}</h2>
-          </div>
+
+
+        <div className="highlight-image">
+          <img src={event.image} alt={event.name} />
+        </div>
 
           <div className="highlight-grid">
             <div className="highlight-text-items">
-              <div className="highlight-item">
-                <h3>PREMIUM EXPERIENCE</h3>
-                <p>World-class performances and production quality</p>
-              </div>
-              <div className="highlight-item">
-                <h3>EXCLUSIVE ACCESS</h3>
-                <p>VIP packages available for dedicated fans</p>
-              </div>
-              <div className="highlight-item">
-                <h3>MEMORABLE MOMENTS</h3>
-                <p>Create lasting memories with friends and family</p>
-              </div>
-              <div className="highlight-item">
+            <div className="highlight-item">
                 <h3>EVENT DATES</h3>
                 <p>
                   Start: {event.date} {event.start_time}<br />
                   End: {event.end_date ? event.end_date : 'N/A'}
                 </p>
               </div>
+
+              <div className="highlight-image">
+                {/* fanzone image */}
+                <img src={event.fanzone ? event.fanzone.image : '/assets/images/fanzone_placeholder.png'} alt="Fanzone" />
+              </div>
+                <h1> 📍 {event.fanzone ? event.fanzone.name : 'N/A'}</h1>
+
             </div>
           </div>
         </div>
 
-        <div className="highlight-image">
-          <img src={event.image} alt={event.name} />
-        </div>
       </div>
     </div>
   );

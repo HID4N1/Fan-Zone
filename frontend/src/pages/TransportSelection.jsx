@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LocationDetector from '../components/LocationDetector';
+import TransportCard from '../components/TransportCard';
 import './TransportSelection.css';
 
 const TransportSelection = () => {
@@ -74,40 +75,36 @@ const TransportSelection = () => {
     return (
       <div className="transport-cards-container">
         {entries.map(([transportType, station], index) => (
-          <div
+          <TransportCard
             key={transportType}
-            className={`transport-card${index === 0 ? ' bold' : ''}`}
+            transportType={transportType}
+            station={station}
+            isRecommended={index === 0}
             onClick={() => {
               console.log('Station clicked:', station);
-                navigate('/walking-route', 
-                { state: {
-                   station, userLocation, eventId, userStation: station } });
+              navigate('/walking-route', {
+                state: { station, userLocation, eventId, userStation: station },
+              });
             }}
-            role="button"
-            tabIndex={0}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                navigate('/walking-route',
-                   { state: { 
-                    station, userLocation, eventId } });
-              }
-            }}
-          >
-            {index === 0 && <div className="recommended-badge">Recommended</div>}
-            {/* <img src="#" alt="transport type image" /> */}
-            <h3>{transportType}</h3>
-            <p>Station: {station.station_name}</p>
-            <p>Line: {station.line_name}</p>
-            <p>Walking time: {station.walking_time_minutes} minutes</p>
-            <p>Distance: {station.distance_km} km</p>
-          </div>
+          />
         ))}
       </div>
     );
   };
 
   return (
-    <div className="transport-selection">
+    
+    <div
+      className="transport-selection"
+      style={{
+        backgroundImage: "url('/assets/images/map-bg.jpeg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh',
+        padding: '20px',
+      }}
+    >
       <h1>Select Your Transport</h1>
       {!eventId && <p style={{ color: 'red' }}>Event ID is missing in URL.</p>}
       <LocationDetector onLocationDetected={handleLocationDetected} onError={handleLocationError} />
@@ -115,6 +112,7 @@ const TransportSelection = () => {
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       {renderStations()}
     </div>
+    
   );
 };
 

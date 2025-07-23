@@ -195,6 +195,7 @@ const WalkingRoute = () => {
 
   const handleCancelArrival = () => {
     setShowArrivalModal(false);
+    
   };
 
   useEffect(() => {
@@ -269,7 +270,6 @@ const WalkingRoute = () => {
             <h3>Arrival Confirmation</h3>
             <p>You have arrived at {station.station_name}. Do you want to confirm your arrival?</p>
             <button onClick={handleConfirmArrival}>Confirm</button>
-            <button onClick={handleCancelArrival}>Cancel</button>
           </div>
         </div>
       )}

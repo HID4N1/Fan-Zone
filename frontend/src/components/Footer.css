@@ -123,7 +123,7 @@
 @media (max-width: 768px) {
   
   .logo img {
-      width: 80px; /* Adjust logo size for smaller screens */
+      width: 80px; 
       height: 80px;
       left: 0;
     }

@@ -1,0 +1,120 @@
+.transport-card {
+    border-radius: 12px;
+    padding: 20px;
+    width: 280px;
+    height: 320px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 8px solid #ff8400;
+  }
+  
+  .transport-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transform: translateY(-4px);
+  }
+  
+  .transport-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* gradien overlay */
+    background: linear-gradient(to top, rgba(0,0,0,0.8),rgba(0,0,0,0.5)  ,rgba(0,0,0,0));
+    z-index: 0;
+  }
+
+  .transport-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .card-info {
+    position: absolute;
+    padding: 0 0 20px 20px;
+    bottom: 0;
+    left: 0;
+    background: transparent ;
+    text-align: left;
+    z-index: 2;
+  }
+  
+  .card-info h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.7rem;
+    padding-bottom: 6px;
+    font-weight: 800px;
+  }
+  
+  .transport-card p {
+    margin: 6px 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+.recommended-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff8400;
+    color: white;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    border-radius: 0 0 0 12px;
+    height: 30px;
+  }
+
+@media (max-width: 600px) {
+  .transport-card {
+    width: 300px;
+    height: 360px;
+    padding: 16px;
+  }
+  .transport-card h3 {
+    font-size: 1.2rem;
+  }
+  .transport-card p {
+    font-size: 0.9rem;
+  }
+  .recommended-badge {
+    /* padding: 4px 10px; */
+    font-size: 0.75rem;
+    top: 0px;
+    right: 0px;
+  }
+}
+
+@media (max-width: 400px) {
+  .transport-card {
+    width: 250px;
+    height: 120px;
+    padding: 12px;
+  }
+  .transport-card h3 {
+    font-size: 1rem;
+  }
+  .transport-card p {
+    font-size: 0.8rem;
+  }
+  .recommended-badge {
+    /* padding: 3px 8px; */
+    font-size: 0.7rem;
+    top: 0px;
+    right: 0px;
+  }
+}

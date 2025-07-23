@@ -14,7 +14,7 @@ const Footer = () => {
                 <img src="/assets/icons/favicon.ico" alt="Logo" />
           </div>
           <p className="description">
-            Plateforme de gestion intelligente des abonnements.<br />
+            Plateforme de gestion intelligente des route<br />
             Simplifiez vos opérations, optimisez vos trajets,<br />
             et restez connecté à chaque étape.
           </p>

@@ -64,7 +64,7 @@ function App() {
               }
             />
 
-            {/* events routing */}
+            {/* admin events routing */}
             <Route path="events" element={
               <AdminProtectedRoute>
                 <ManageEvents />
@@ -81,7 +81,7 @@ function App() {
               </AdminProtectedRoute>
             } />
 
-            {/* fanzones routing */}
+            {/* admin fanzones routing */}
             <Route path="fanzones" element={
               <AdminProtectedRoute>
                 <ManageFanzones />
